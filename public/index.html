@@ -29,15 +29,31 @@
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
-
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
-
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
+    <form action="result.html" method="post">
+      Student Name:    <input type="text" id="student" name ="student"/><br>
+      Student ID Code: <input type="text" id="studentid" name="studentid"/><br>
+      Status: 
+          <input type="radio" name="status" value="freshman"> Freshman
+          <input type="radio" name="status" value="sophomore"> Sophomore
+          <input type="radio" name="status" value="junior"> Junior
+          <input type="radio" name="status" value="senior"> Senior
+          <br>
+      Major:      
+          <select name="major">
+          <option value ="cs">Computer Sciences</option>
+          <option value ="ee">Electrical Engineering</option>
+          <option value ="math">Math</option>
+          <option value ="econ">Economics</option>
+          </select> <br>
+      Course History: 
+          <br>
+          <textarea rows="5" cols="30" placeholder=
+      "Example: 
+      CS 157C
+      CS 100W" name="History"></textarea>
+      <br>
+      <br>
+      <input type="submit" value="Find course Plan">
+      </form>
   </body>
 </html>
