@@ -7,9 +7,9 @@ export default class Index extends Component {
         super(props);
         this.state = {
           studentID: '',
-          studnetName: '',
+          studentName: '',
           studentStatus: '',
-          studnetMajor: '',
+          studentMajor: '',
           studentCH:''
         };
     
@@ -59,7 +59,7 @@ export default class Index extends Component {
     _handleSubmit  = (event) => {
         console.log(this.state);
         event.preventDefault();
-        axios.post('public/index.html',this.state).
+        axios.post('http://localhost:5000/test/result',this.state).
         then( response => {
             console.log(response)
             this.setState({message:"User created successfuly."})
@@ -68,52 +68,7 @@ export default class Index extends Component {
         })
     }
     
-    // handleSubmit(e) {
-    //     e.preventDefault();
-    //     this.setState({
-    //         studentID: '',
-    //         studentName: '',
-    //         studentStatus: '',
-    //         studnetMajor: '',
-    //         studentCH: ''
-    //     });
-
-    //     $.ajax({
-    //         url: 'public/index.html',
-    //         type: 'POST',
-    //         data: {
-    //           'form_id': this.state.studentID,
-    //           'form_name': this.state.studnetName,
-    //           'form_status': this.state.studentStatus,
-    //           'form_major': this.state.studnetMajor,
-    //           'form_ch': this.state.studentCH
-    //         },
-    //         cache: false,
-    //         success: function(data) {
-    //           // Success..
-    //           this.setState({
-    //             studentID: 'success',
-    //             studnetName: '<h1>Kontakt skickad!</h1><p>Återkommer så fort som möjligt.</p>'
-
-    //           });
-    //           $('#formContact').slideUp();
-    //           $('#formContact').after(this.state.studentName);
-    //           console.log('success', data);
-    //         }.bind(this),
-    //         // Fail..
-    //         error: function(xhr, status, err) {
-    //           console.log(xhr, status);
-    //           console.log(err);
-    //           this.setState({
-    //             studnetID: 'danger',
-    //             studnetName: '<h1>Sorry det blev fel</h1><p>Försök gärna igen, eller mejla mig direkt på magdamargaretha@gmail.com</p>'
-    //           });
-    //           console.log(this.state.studentID + this.state.studentName + 'fail');
-    //         }.bind(this)
-    //     });
-    // }
-      
-
+  
     render() {
         return (
             <div className="contact">
@@ -132,7 +87,7 @@ export default class Index extends Component {
                         <option value="senior">Senior</option>
                     </select><br/>
                     Student Major:
-                    <select name="major" value={this.state.studnetMajor} onChange={this._handleChangeMajor} required>
+                    <select name="major" value={this.state.studentMajor} onChange={this._handleChangeMajor} required>
                         <option value ="cs">Computer Sciences</option>
                         <option value ="ee">Electrical Engineering</option>
                         <option value ="math">Math</option>
