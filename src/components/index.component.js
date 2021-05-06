@@ -67,9 +67,7 @@ export default class Index extends Component {
             console.log(error)
         })
     }
-    
       
-
     render() {
         return (
             <div className="contact">
@@ -82,14 +80,16 @@ export default class Index extends Component {
                     <input type="text" id="studentid" name="studentid" value={this.state.studentID} onChange={this._handleChangeID} required/><br/>
                     Student Status:
                     <select value={this.state.studentStatus} onChange={this._handleChangeStatus} required>
-                        <option default value="freshman">Freshman</option>
+                        <option default value="">-</option>
+                        <option value="freshman">Freshman</option>
                         <option value="sophomore">Sophomore</option>
                         <option value="junior">Junior</option>
                         <option value="senior">Senior</option>
                     </select><br/>
                     Student Major:
                     <select name="major" value={this.state.studentMajor} onChange={this._handleChangeMajor} required>
-                        <option default value ="cs">Computer Sciences</option>
+                        <option default value="">-</option>
+                        <option value ="cs">Computer Sciences</option>
                         <option value ="ee">Electrical Engineering</option>
                         <option value ="math">Math</option>
                         <option value ="econ">Economics</option>
