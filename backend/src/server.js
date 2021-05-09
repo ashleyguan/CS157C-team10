@@ -10,8 +10,8 @@ const port = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
-const queryRouter = require('./routes/test');
-app.use('/test', queryRouter);
+const queryRouter = require('./routes/requirements');
+app.use('/requirements', queryRouter);
 
 const driver = neo4j.driver('bolt://3.231.207.99:7687',
                   neo4j.auth.basic('neo4j', 'rifling-brackets-tries'), 

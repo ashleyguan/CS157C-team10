@@ -59,7 +59,7 @@ export default class Index extends Component {
     _handleSubmit  = (event) => {
         console.log(this.state);
         event.preventDefault();
-        axios.post('http://localhost:5000/test/result',this.state).
+        axios.post('http://localhost:5000/requirements/result',this.state).
         then( response => {
             console.log(response)
             this.setState({message:"User created successfuly."})
@@ -103,9 +103,7 @@ export default class Index extends Component {
                 <br/>
                 <input type="submit" value="Find course Plan" />
             </form>
-            </div>
-            
-            
+            </div>      
         );
     }
 }
