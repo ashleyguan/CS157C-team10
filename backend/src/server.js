@@ -13,7 +13,9 @@ app.use(express.json());
 const queryRouter = require('./routes/test');
 app.use('/test', queryRouter);
 
-const driver = neo4j.driver('bolt://3.231.155.32:7687', neo4j.auth.basic('neo4j', 'squares-advance-allies'))
+const driver = neo4j.driver('bolt://3.231.207.99:7687',
+                  neo4j.auth.basic('neo4j', 'rifling-brackets-tries'), 
+                  {/* encrypted: 'ENCRYPTION_OFF' */});
 const session = driver.session();
 console.log("Neo4J connection established successfully");
 
