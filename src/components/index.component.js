@@ -10,7 +10,8 @@ export default class Index extends Component {
           studentName: '',
           studentStatus: '',
           studentMajor: '',
-          studentCH:''
+          studentCH:'',
+          prereq_resolution: []
         };
     
         this._handleSubmit = this._handleSubmit.bind(this);
@@ -59,16 +60,32 @@ export default class Index extends Component {
     _handleSubmit  = (event) => {
         console.log(this.state);
         event.preventDefault();
-        axios.post('http://localhost:5000/requirements/result',this.state).
+        axios.post('http://localhost:5000/requirements/verify_course_history',this.state).
         then( response => {
-            console.log(response)
-            this.setState({message:"User created successfuly."})
+            if (response.data[1].length != 0){
+                console.log("Unresolved prerequisites found: " + response.data[1])
+                axios.post('http://localhost:5000/requirements/get_prereq_options',response.data[1]).
+                then( response => {
+                    console.log("im in it")
+                    console.log(response.data[0])
+                    this.setState({
+                        prereq_resolution:response.data
+                    });
+
+                //     axios.post('http://localhost:5000/requirements/resolve_prereqs',response.data[1]).
+                //     then( response => {
+                //             console.log("yo ")
+                // })
+            })
+        }
         }).catch( error => {
             console.log(error)
         })
     }
       
     render() {
+        const items = JSON.stringify(this.state.prereq_resolution)
+        
         return (
             <div className="contact">
                 <form className="form" onSubmit={this._handleSubmit} id="formContact">
@@ -100,9 +117,11 @@ export default class Index extends Component {
                     CS 100W" 
                     name="History" value={this.state.studentCH} onChange={this._handleChangeCH}></textarea>
                 </label>
+                <p>{items}</p>
                 <br/>
                 <input type="submit" value="Find course Plan" />
             </form>
+            
             </div>      
         );
     }
