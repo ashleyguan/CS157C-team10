@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Collapsible from 'react-collapsible';
+import "./result.scss";
 
 export default class Result extends Component {
     constructor(props) {
