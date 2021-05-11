@@ -422,6 +422,7 @@ router.route('/result').post(async (req, res) => {
         let requirement_subcategories_combined = await get_requirement_subcategories(requirements[i]) 
             let requirement_subcategories = requirement_subcategories_combined[0]
             let requirement_subcategory_units= requirement_subcategories_combined[1]
+        
         for (j = 0;j<requirement_subcategories.length;j++){
             requirement_json[requirements[i]][requirement_subcategories[j]] = {}
             requirement_json[requirements[i]][requirement_subcategories[j]]["Required Units"] = requirement_subcategory_units[j]
@@ -451,6 +452,9 @@ router.route('/result').post(async (req, res) => {
 
             console.log("\tRequirement Subcategory:"+requirement_subcategories[j]+ " (units: "+requirement_subcategory_units[j]+")")
 
+            requirement_json[requirements[i]][requirement_subcategories[j]]["Subcategory Sections"] = {}
+            requirement_json[requirements[i]][requirement_subcategories[j]]["Subcategory Information"]= {}
+
             for (k = 0;k<subcategory_sections.length;k++){
                 var subcategory_section_units_remaining = subcategory_section_units[k]
 
@@ -478,37 +482,36 @@ router.route('/result').post(async (req, res) => {
                 })
                 
 
-                requirement_json[requirements[i]][requirement_subcategories[j]][subcategory_sections[k]] = {}
+                requirement_json[requirements[i]][requirement_subcategories[j]]["Subcategory Sections"][subcategory_sections[k]] = {}
+                requirement_json[requirements[i]][requirement_subcategories[j]]["Subcategory Information"][subcategory_sections[k]] = {}
+
 
                 if (subcategory_section_units_remaining > 0 || remaining_subcategory_section_required_courses.length > 0){
 
                     console.log("\t\tSubcategory Section: " + subcategory_sections[k]+ " (units: "+subcategory_section_units[k]+")")
-                    requirement_json[requirements[i]][requirement_subcategories[j]][subcategory_sections[k]]["Required Units"] = subcategory_section_units[k]
+                    requirement_json[requirements[i]][requirement_subcategories[j]]["Subcategory Sections"][subcategory_sections[k]]["Required Units"] = subcategory_section_units[k]
 
                     console.log("\t\t\tUnits remaining: " + subcategory_section_units_remaining)
-                    requirement_json[requirements[i]][requirement_subcategories[j]][subcategory_sections[k]]["Remaining Units"] = subcategory_section_units_remaining
+                    requirement_json[requirements[i]][requirement_subcategories[j]]["Subcategory Sections"][subcategory_sections[k]]["Remaining Units"] = subcategory_section_units_remaining
 
                     console.log("\t\t\tSubcategory Section Requirements: " + subcategory_section_requirements)
-                    requirement_json[requirements[i]][requirement_subcategories[j]][subcategory_sections[k]]["Required Courses"] = subcategory_section_requirements
+                    requirement_json[requirements[i]][requirement_subcategories[j]]["Subcategory Sections"][subcategory_sections[k]]["Required Courses"] = subcategory_section_requirements
 
                     console.log("\t\t\t\tCompleted: "+total_subcategory_section_completed_courses)
-                    requirement_json[requirements[i]][requirement_subcategories[j]][subcategory_sections[k]]["Completed Courses"] = total_subcategory_section_completed_courses
+                    requirement_json[requirements[i]][requirement_subcategories[j]]["Subcategory Sections"][subcategory_sections[k]]["Completed Courses"] = total_subcategory_section_completed_courses
 
                     console.log("\t\t\t\tRemaining required: "+remaining_subcategory_section_required_courses)
-                    requirement_json[requirements[i]][requirement_subcategories[j]][subcategory_sections[k]]["Remaining Required"] = remaining_subcategory_section_required_courses
+                    requirement_json[requirements[i]][requirement_subcategories[j]]["Subcategory Sections"][subcategory_sections[k]]["Remaining Required"] = remaining_subcategory_section_required_courses
 
                     console.log("\t\t\t\tSubcategory Section Satisfiers: " + subcategory_section_satisfiers)
-                    requirement_json[requirements[i]][requirement_subcategories[j]][subcategory_sections[k]]["Satisfiers"] = remaining_subcategory_section_satisfying_courses
+                    requirement_json[requirements[i]][requirement_subcategories[j]]["Subcategory Sections"][subcategory_sections[k]]["Satisfiers"] = remaining_subcategory_section_satisfying_courses
 
                     all_subcategory_sections_satisfied = false
-                    requirement_json[requirements[i]][requirement_subcategories[j]][subcategory_sections[k]]["Completed"] = false
+                    requirement_json[requirements[i]][requirement_subcategories[j]]["Subcategory Sections"][subcategory_sections[k]]["Completed"] = false
 
                 }else{
                     console.log("\t\tSubcategory Section: " + subcategory_sections[k]+ " (units: "+subcategory_section_units[k]+") COMPLETED")
-                    requirement_json[requirements[i]][requirement_subcategories[j]][subcategory_sections[k]]["Completed"] = true
-
-
-
+                    requirement_json[requirements[i]][requirement_subcategories[j]]["Subcategory Sections"][subcategory_sections[k]]["Completed"] = true
                 }
 
             }
@@ -532,27 +535,27 @@ router.route('/result').post(async (req, res) => {
             if (subcategory_units_remaining > 0 || remaining_subcategory_requirements.length > 0){
 
                 console.log("\t\t\tUnits remaining: " + subcategory_units_remaining)
-                requirement_json[requirements[i]][requirement_subcategories[j]]["Remaining Units"] = subcategory_units_remaining
+                requirement_json[requirements[i]][requirement_subcategories[j]]["Subcategory Information"]["Remaining Units"] = subcategory_units_remaining
 
                 console.log("\t\tRequired Courses: " + subcategory_required_courses)
-                requirement_json[requirements[i]][requirement_subcategories[j]]["Required Courses"] = subcategory_required_courses
+                requirement_json[requirements[i]][requirement_subcategories[j]]["Subcategory Information"]["Required Courses"] = subcategory_required_courses
 
                 console.log("\t\t\tCompleted: "+completed_subcategory_requirements)
-                requirement_json[requirements[i]][requirement_subcategories[j]]["Completed Courses"] = total_subcategory_completed_courses
+                requirement_json[requirements[i]][requirement_subcategories[j]]["Subcategory Information"]["Completed Courses"] = total_subcategory_completed_courses
 
                 console.log("\t\t\tRemaining required: "+remaining_subcategory_requirements)
-                requirement_json[requirements[i]][requirement_subcategories[j]]["Remaining Required"] = remaining_subcategory_requirements
+                requirement_json[requirements[i]][requirement_subcategories[j]]["Subcategory Information"]["Remaining Required"] = remaining_subcategory_requirements
 
                 console.log("\t\tSatisfying Courses: " + subcategory_satisfying_courses)
-                requirement_json[requirements[i]][requirement_subcategories[j]]["Satisfiers"] = remaining_subcategory_satisfying_courses
+                requirement_json[requirements[i]][requirement_subcategories[j]]["Subcategory Information"]["Satisfiers"] = remaining_subcategory_satisfying_courses
 
-                requirement_json[requirements[i]][requirement_subcategories[j]]["Completed"] = false
+                requirement_json[requirements[i]][requirement_subcategories[j]]["Subcategory Information"]["Completed"] = false
 
 
                 console.log("\n")
         }else{
             console.log("\tRequirement Subcategory COMPLETED")
-            requirement_json[requirements[i]][requirement_subcategories[j]]["Completed"] = true
+            requirement_json[requirements[i]][requirement_subcategories[j]]["Subcategory Information"]["Completed"] = true
 
 
 
