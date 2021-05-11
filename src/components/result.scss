@@ -1,13 +1,15 @@
 .Collapsible {
   background-color: white;
+  
 }
 
 
 //The content within the collaspable area
 .Collapsible__contentInner {
   padding: 10px;
-  border: 1px solid lightgray;
+  border: 100px solid white;
   border-top: 0;
+  border-bottom: 0;
 
   p {
     margin-bottom: 10px;
@@ -40,6 +42,7 @@
     right: 10px;
     top: 10px;
     display: block;
+    background: url('arrow-row-expand-down-ico-white.svg') no-repeat;
     transition: transform 300ms;
   }
 
@@ -54,6 +57,7 @@
     background-color: grey;
   }
 }
+
 
 .CustomTriggerCSS {
   background-color: lightcoral;

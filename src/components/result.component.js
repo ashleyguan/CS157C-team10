@@ -40,13 +40,13 @@ export default class Result extends Component {
                                     }else{
                                         console.log("\t\t\t\twhats this: " + item)
                                         if ((Array.isArray(result[requirement][subcategory][subcategory_identifier][subcategory_section][item]) && result[requirement][subcategory][subcategory_identifier][subcategory_section][item].length > 0) || Number.isInteger(result[requirement][subcategory][subcategory_identifier][subcategory_section][item])){
-                                            sec_req.push(<Collapsible trigger={item}>{result[requirement][subcategory][subcategory_identifier][subcategory_section][item]}</Collapsible>)
+                                            sec_req.push(<Collapsible  trigger={item}>{result[requirement][subcategory][subcategory_identifier][subcategory_section][item]}</Collapsible>)
                                         }
                                     }
 
 
                                 }
-                                subcategory_section_table.push(<Collapsible trigger={subcategory_section}>{sec_req}</Collapsible>)
+                                subcategory_section_table.push(<Collapsible  trigger={subcategory_section}>{sec_req}</Collapsible>)
 
 
                             }
