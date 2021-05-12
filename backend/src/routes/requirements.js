@@ -7,8 +7,8 @@ const neo4j = require('neo4j-driver');
 var parser = require('parse-neo4j');
 const { isCompositeComponent } = require('react-dom/test-utils');
 
-const driver = neo4j.driver('bolt://3.231.207.99:7687',
-                  neo4j.auth.basic('neo4j', 'rifling-brackets-tries'), 
+const driver = neo4j.driver('bolt://localhost:7687',
+                  neo4j.auth.basic('neo4j', 'root'), 
                   {/* encrypted: 'ENCRYPTION_OFF' */});
                   
 // const session = driver.session();
@@ -312,6 +312,8 @@ async function get_units(title){
  }
 
 
+
+
 // router.route('/verify_course_history').post(async (req, res) => {
 //     // get completed courses
 //     const courses = req.body.studentCH.split('\n')
@@ -495,16 +497,23 @@ router.route('/result').post(async (req, res) => {
                     requirement_json[requirements[i]][requirement_subcategories[j]]["Subcategory Sections"][subcategory_sections[k]]["Remaining Units"] = subcategory_section_units_remaining
 
                     console.log("\t\t\tSubcategory Section Requirements: " + subcategory_section_requirements)
-                    requirement_json[requirements[i]][requirement_subcategories[j]]["Subcategory Sections"][subcategory_sections[k]]["Required Courses"] = subcategory_section_requirements
+                    if (subcategory_section_requirements.length > 0){
+                        requirement_json[requirements[i]][requirement_subcategories[j]]["Subcategory Sections"][subcategory_sections[k]]["Required Courses"] = subcategory_section_requirements
+                    }
 
                     console.log("\t\t\t\tCompleted: "+total_subcategory_section_completed_courses)
-                    requirement_json[requirements[i]][requirement_subcategories[j]]["Subcategory Sections"][subcategory_sections[k]]["Completed Courses"] = total_subcategory_section_completed_courses
+                    if (total_subcategory_section_completed_courses.length > 0){
+                        requirement_json[requirements[i]][requirement_subcategories[j]]["Subcategory Sections"][subcategory_sections[k]]["Completed Courses"] = total_subcategory_section_completed_courses
+                    }
 
                     console.log("\t\t\t\tRemaining required: "+remaining_subcategory_section_required_courses)
-                    requirement_json[requirements[i]][requirement_subcategories[j]]["Subcategory Sections"][subcategory_sections[k]]["Remaining Required"] = remaining_subcategory_section_required_courses
-
+                    if (remaining_subcategory_section_required_courses.length > 0){
+                        requirement_json[requirements[i]][requirement_subcategories[j]]["Subcategory Sections"][subcategory_sections[k]]["Remaining Required"] = remaining_subcategory_section_required_courses
+                    }
                     console.log("\t\t\t\tSubcategory Section Satisfiers: " + subcategory_section_satisfiers)
-                    requirement_json[requirements[i]][requirement_subcategories[j]]["Subcategory Sections"][subcategory_sections[k]]["Satisfiers"] = remaining_subcategory_section_satisfying_courses
+                    if (remaining_subcategory_section_satisfying_courses.length > 0){
+                    requirement_json[requirements[i]][requirement_subcategories[j]]["Subcategory Sections"][subcategory_sections[k]]["Satisfying Courses"] = remaining_subcategory_section_satisfying_courses
+                    }
 
                     all_subcategory_sections_satisfied = false
                     requirement_json[requirements[i]][requirement_subcategories[j]]["Subcategory Sections"][subcategory_sections[k]]["Completed"] = false
