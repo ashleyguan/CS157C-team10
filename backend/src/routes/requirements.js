@@ -24,7 +24,7 @@ async function get_requirements(){
         result.records.forEach(record => {       
             // console.log(record) 
             record._fields.forEach(function(field,i){
-                requirements.push(field.properties['title'])
+                requirements.push(field.properties)
                 if (field.properties.hasOwnProperty('units')){
                     requirement_units.push(field.properties.units.low)
                 }else{
@@ -40,20 +40,20 @@ async function get_requirements(){
     })
 
 
-    return [requirements,requirement_units]
+    return requirements
 }
 
-async function get_requirement_subcategories(requirement){
-    //    console.log(`MATCH (n:Requirement)-[r:REQUIRES]-(m:\`Requirement Subcategory\`) WHERE n.title = "${requirement}" RETURN m`)
+async function get_requirement_subcategories(){
+    //    console.log(`MATCH (n)-[r]-(m:`Requirement Subcategory`) WHERE n.title = "CS 160" RETURN n,r,m`)
         const session = driver.session();
         let requirement_subcategories = []
         let requirement_subcategory_units = []
 
         var result =  await session
-        .run(`MATCH (n:Requirement)-[r:REQUIRES]-(m:\`Requirement Subcategory\`) WHERE n.title = "${requirement}" RETURN m`).then(result => {
+        .run(`MATCH (n:\`Requirement Subcategory\`) RETURN n`).then(result => {
             result.records.forEach(record => {       
                 record._fields.forEach(function(field,i){
-                    requirement_subcategories.push(field.properties['title'])
+                    requirement_subcategories.push(field.properties)
                     if (field.properties.hasOwnProperty('units')){
                         requirement_subcategory_units.push(field.properties.units.low)
                     }else{
@@ -68,9 +68,127 @@ async function get_requirement_subcategories(requirement){
         }).then(() => session.close())  
     
         // console.log("Subcategories: " + requirement_subcategories)
-        return [requirement_subcategories,requirement_subcategory_units]
+        return requirement_subcategories
     }
+
+    async function get_requirement_subcategories_sections(){
+        //    console.log(`MATCH (n)-[r]-(m:`Requirement Subcategory`) WHERE n.title = "CS 160" RETURN n,r,m`)
+            const session = driver.session();
+            let requirement_subcategories_sections= []
+
+            let requirement_subcategory_units = []
+    
+            var result =  await session
+            .run(`MATCH (n:\`Subcategory Section\`) RETURN n`).then(result => {
+                result.records.forEach(record => {
+                    var cur_req = {}
+                    record._fields.forEach(function(field,i){
+                        requirement_subcategories_sections.push(field.properties)
+                        if (field.properties.hasOwnProperty('units')){
+                            requirement_subcategory_units.push(field.properties.units.low)
+                        }else{
+                            requirement_subcategory_units.push(0)
+    
+                        }
+                    })
+                })
+            })
+            .catch(function(error) {
+                console.log(error);
+            })            
+              // .then(() => session.close())  
+        
+            // console.log("Subcategories: " + requirement_subcategories)
+            // console.log(requirement_subcategories_sections)
+            return requirement_subcategories_sections
+        }
  
+        async function fill_requirement_subcategories_sections_requirements(requirement_subcategories_section){
+            var filled_reqs = []
+       const session = driver.session();
+            console.log(`MATCH (n)-[r:REQUIRES]->(m) WHERE n.title = "${requirement_subcategories_section.title}" RETURN m`)
+            var result =  await session
+            .run(`MATCH (n)-[r:REQUIRES]->(m) WHERE n.title = "${requirement_subcategories_section.title}" RETURN m`).then(result => {
+                var cur_req = []
+
+                result.records.forEach(record => {
+                    record._fields.forEach(function(field,i){
+                        cur_req.push(field.properties.title)
+                    })
+                    filled_reqs["Requirements"] = cur_req
+                })
+            })
+            .catch(function(error) {
+                console.log(error);
+                // console.log(requirement_subcategories_sections)
+            })
+            return filled_reqs
+        }
+
+        async function fill_requirement_subcategories_sections_satisfy(requirement_subcategories_section){
+            var filled_sats = []
+       const session = driver.session();
+            // console.log(`MATCH (n)<-[r:SATISFIES]-(m) WHERE n.title = "${requirement_subcategories_section.title}" RETURN m`)
+            var result =  await session
+            .run(`MATCH (n)<-[r:SATISFIES]-(m) WHERE n.title = "${requirement_subcategories_section.title}" RETURN m`).then(result => {
+                // var cur_req = []
+
+                result.records.forEach(record => {
+                    record._fields.forEach(function(field,i){
+                        filled_sats.push(field.properties.title)
+                    })
+                    // filled_sats["Satisfies"] = cur_req
+                })
+            })
+            .catch(function(error) {
+                console.log(error);
+                // console.log(requirement_subcategories_sections)
+            })
+            return filled_sats
+        }
+        // requirement_subcategories_sections.forEach(async section => {
+        //     console.log("***********")
+        //     console.log(requirement_subcategories_sections[section])
+        //     // console.log(requirement_subcategories_sections)
+        //     // console.log(section)
+        //     const session = driver.session();
+
+        //     var result =  await session
+        //     .run(`MATCH (n)-[r:REQUIRES]->(m) WHERE n.title = "${requirement_subcategories_sections[section].title}" RETURN m`).then(result => {
+        //         var cur_req = []
+
+        //         result.records.forEach(record => {
+        //             record._fields.forEach(function(field,i){
+        //                 cur_req.push(field.properties.title)
+        //             })
+        //             requirement_subcategories_sections[section]["Requirements"] = cur_req
+        //         })
+        //     })
+        //     .catch(function(error) {
+        //         console.log(error);
+        //         // console.log(requirement_subcategories_sections)
+        //     })
+        //     var result =  await session
+        //     .run(`MATCH (n)<-[r:SATISFIES]-(m) WHERE n.title = "${requirement_subcategories_sections[section].title}" RETURN m`).then(result => {
+        //         var cur_sat = []
+
+        //         result.records.forEach(record => {
+        //             record._fields.forEach(function(field,i){
+        //                 cur_sat.push(field.properties.title)
+        //             })
+        //             // console.log("*********8")
+        //             // console.log(cur_sat)
+        //             requirement_subcategories_sections[section]["Satisfiers"] = cur_sat
+        //         })
+        //     })
+        //     .catch(function(error) {
+        //         console.log(error);
+        //     }).then(() => session.close())  
+        //     // console.log("------------------------")
+        //     // console.log(requirement_subcategories_sections)
+        //     // console.log(section)
+        //     // console.log("**********")
+        // })
     async function get_requirement_subcategory_requirements(requirement_subcategory){
         //    console.log(`MATCH (n:\`Requirement Subcategory\`)-[r:REQUIRES]->(m) WHERE n.title = "${requirement_subcategory}" return m`)
             const session = driver.session();
@@ -406,175 +524,23 @@ router.route('/result').post(async (req, res) => {
 
     var completed_requirements = []
 
-    // get requirements
-    var requirements_combined = await get_requirements()
-        var requirements = requirements_combined[0]
-        var requirement_units = requirements_combined[1]
-    // for each requirement
-    for (i = 0;i<requirements.length;i++){
-        requirement_json[requirements[i]] = {}
-
-        console.log("Requirement: " + requirements[i] + " (units: "+requirement_units[i]+")")
-        requirement_json[requirements[i]]["Required Units"] = requirement_units[i]
-
-        var completed_subcategories = []
-
-        
-        // get requirement subcategories; returns: [[subcategory,subcategory,...],[units,units,...]]
-        let requirement_subcategories_combined = await get_requirement_subcategories(requirements[i]) 
-            let requirement_subcategories = requirement_subcategories_combined[0]
-            let requirement_subcategory_units= requirement_subcategories_combined[1]
-        
-        for (j = 0;j<requirement_subcategories.length;j++){
-            requirement_json[requirements[i]][requirement_subcategories[j]] = {}
-            requirement_json[requirements[i]][requirement_subcategories[j]]["Required Units"] = requirement_subcategory_units[j]
-
-            var completed_subcategory_sections = []
-            var remaining_subcategory_sections = []
+    // console.log(await get_requirements())
+    // console.log(await get_requirement_subcategories())
+    // console.log()
+    var secs = await get_requirement_subcategories_sections()
+    for (i = 0;i<secs.length;i++){
+        console.log(secs[i])
+        console.log("0000000000000000000")
+        secs[i]["Satisfiers"] = await fill_requirement_subcategories_sections_satisfy(secs[i])
+        secs[i]["Required"] = await fill_requirement_subcategories_sections_requirements(secs[i])
+        console.log(secs[i])
+        console.log("111111111111111")
 
 
-            
-            var subcategory_units_remaining = requirement_subcategory_units[j]
-
-
-            
-           // get requirement subcategory requirements; returns [[subcategory_sections,subcategory_section_units],[required_courses,required_course_units],[satisfying_courses,satisfying_course_units]]
-            let subcategory_requirements_combined = await get_requirement_subcategory_requirements(requirement_subcategories[j])
-
-            let subcategory_sections = subcategory_requirements_combined[0][0]
-            let subcategory_section_units = subcategory_requirements_combined[0][1]
-
-            let subcategory_required_courses = subcategory_requirements_combined[1][0]
-            let subcategory_required_course_units = subcategory_requirements_combined[1][1]
-
-            let subcategory_satisfying_courses = subcategory_requirements_combined[2][0]
-            let subcategory_satisfying_course_units = subcategory_requirements_combined[2][1]
-   
-            let all_subcategory_sections_satisfied = true
-
-            console.log("\tRequirement Subcategory:"+requirement_subcategories[j]+ " (units: "+requirement_subcategory_units[j]+")")
-
-            requirement_json[requirements[i]][requirement_subcategories[j]]["Subcategory Sections"] = {}
-            requirement_json[requirements[i]][requirement_subcategories[j]]["Subcategory Information"]= {}
-
-            for (k = 0;k<subcategory_sections.length;k++){
-                var subcategory_section_units_remaining = subcategory_section_units[k]
-
-                // returns: [[subcategory_section_requirements,subcategory_section_requirement_units],[subcategory_section_satisfiers,subcategory_section_satisfier_units]]
-                var subcategory_section_requirements_combined = await get_subcategory_section_requirements(subcategory_sections[k])
-                    var subcategory_section_requirements = subcategory_section_requirements_combined[0][0]
-                    var subcategory_section_requirement_units = subcategory_section_requirements_combined[0][1]
-
-                    var subcategory_section_satisfiers = subcategory_section_requirements_combined[1][0]
-                    var subcategory_section_satisfier_units = subcategory_section_requirements_combined[1][1]
-
-                var completed_subcategory_section_required_courses = intersection(completed_courses,subcategory_section_requirements)
-                var remaining_subcategory_section_required_courses = difference(subcategory_section_requirements,completed_subcategory_section_required_courses)
-
-                var completed_subcategory_section_satisfying_courses = intersection(completed_courses,subcategory_section_satisfiers)
-                var remaining_subcategory_section_satisfying_courses = difference(subcategory_section_satisfiers,completed_subcategory_section_satisfying_courses)
-
-                var total_subcategory_section_completed_courses = completed_subcategory_section_required_courses.concat(completed_subcategory_section_satisfying_courses)
-                completed_subcategory_section_required_courses.forEach(async course => {
-                    subcategory_section_units_remaining -=  completed_course_units[completed_courses.indexOf(course)]
-                })
-
-                completed_subcategory_section_satisfying_courses.forEach(async course => {
-                    subcategory_section_units_remaining -=  completed_course_units[completed_courses.indexOf(course)]
-                })
-                
-
-                requirement_json[requirements[i]][requirement_subcategories[j]]["Subcategory Sections"][subcategory_sections[k]] = {}
-                requirement_json[requirements[i]][requirement_subcategories[j]]["Subcategory Information"][subcategory_sections[k]] = {}
-
-
-                if (subcategory_section_units_remaining > 0 || remaining_subcategory_section_required_courses.length > 0){
-
-                    console.log("\t\tSubcategory Section: " + subcategory_sections[k]+ " (units: "+subcategory_section_units[k]+")")
-                    requirement_json[requirements[i]][requirement_subcategories[j]]["Subcategory Sections"][subcategory_sections[k]]["Required Units"] = subcategory_section_units[k]
-
-                    console.log("\t\t\tUnits remaining: " + subcategory_section_units_remaining)
-                    requirement_json[requirements[i]][requirement_subcategories[j]]["Subcategory Sections"][subcategory_sections[k]]["Remaining Units"] = subcategory_section_units_remaining
-
-                    console.log("\t\t\tSubcategory Section Requirements: " + subcategory_section_requirements)
-                    if (subcategory_section_requirements.length > 0){
-                        requirement_json[requirements[i]][requirement_subcategories[j]]["Subcategory Sections"][subcategory_sections[k]]["Required Courses"] = subcategory_section_requirements
-                    }
-
-                    console.log("\t\t\t\tCompleted: "+total_subcategory_section_completed_courses)
-                    if (total_subcategory_section_completed_courses.length > 0){
-                        requirement_json[requirements[i]][requirement_subcategories[j]]["Subcategory Sections"][subcategory_sections[k]]["Completed Courses"] = total_subcategory_section_completed_courses
-                    }
-
-                    console.log("\t\t\t\tRemaining required: "+remaining_subcategory_section_required_courses)
-                    if (remaining_subcategory_section_required_courses.length > 0){
-                        requirement_json[requirements[i]][requirement_subcategories[j]]["Subcategory Sections"][subcategory_sections[k]]["Remaining Required"] = remaining_subcategory_section_required_courses
-                    }
-                    console.log("\t\t\t\tSubcategory Section Satisfiers: " + subcategory_section_satisfiers)
-                    if (remaining_subcategory_section_satisfying_courses.length > 0){
-                    requirement_json[requirements[i]][requirement_subcategories[j]]["Subcategory Sections"][subcategory_sections[k]]["Satisfying Courses"] = remaining_subcategory_section_satisfying_courses
-                    }
-
-                    all_subcategory_sections_satisfied = false
-                    requirement_json[requirements[i]][requirement_subcategories[j]]["Subcategory Sections"][subcategory_sections[k]]["Completed"] = false
-
-                }else{
-                    console.log("\t\tSubcategory Section: " + subcategory_sections[k]+ " (units: "+subcategory_section_units[k]+") COMPLETED")
-                    requirement_json[requirements[i]][requirement_subcategories[j]]["Subcategory Sections"][subcategory_sections[k]]["Completed"] = true
-                }
-
-            }
-
-            var completed_subcategory_requirements = intersection(completed_courses,subcategory_required_courses)
-            var remaining_subcategory_requirements = difference(subcategory_required_courses,completed_subcategory_requirements)
-
-            var completed_subcategory_satisfying_courses = intersection(completed_courses,subcategory_satisfying_courses)
-            var remaining_subcategory_satisfying_courses = difference(subcategory_satisfying_courses,completed_subcategory_satisfying_courses)
-
-            var total_subcategory_completed_courses = completed_subcategory_requirements.concat(completed_subcategory_satisfying_courses)
-
-            completed_subcategory_requirements.forEach(async course => {
-                subcategory_units_remaining -= completed_course_units[completed_courses.indexOf(course)]
-            })
-
-            completed_subcategory_satisfying_courses.forEach(async course => {
-                subcategory_units_remaining -= completed_course_units[completed_courses.indexOf(course)]
-            })
-
-            if (subcategory_units_remaining > 0 || remaining_subcategory_requirements.length > 0){
-
-                console.log("\t\t\tUnits remaining: " + subcategory_units_remaining)
-                requirement_json[requirements[i]][requirement_subcategories[j]]["Subcategory Information"]["Remaining Units"] = subcategory_units_remaining
-
-                console.log("\t\tRequired Courses: " + subcategory_required_courses)
-                requirement_json[requirements[i]][requirement_subcategories[j]]["Subcategory Information"]["Required Courses"] = subcategory_required_courses
-
-                console.log("\t\t\tCompleted: "+completed_subcategory_requirements)
-                requirement_json[requirements[i]][requirement_subcategories[j]]["Subcategory Information"]["Completed Courses"] = total_subcategory_completed_courses
-
-                console.log("\t\t\tRemaining required: "+remaining_subcategory_requirements)
-                requirement_json[requirements[i]][requirement_subcategories[j]]["Subcategory Information"]["Remaining Required"] = remaining_subcategory_requirements
-
-                console.log("\t\tSatisfying Courses: " + subcategory_satisfying_courses)
-                requirement_json[requirements[i]][requirement_subcategories[j]]["Subcategory Information"]["Satisfiers"] = remaining_subcategory_satisfying_courses
-
-                requirement_json[requirements[i]][requirement_subcategories[j]]["Subcategory Information"]["Completed"] = false
-
-
-                console.log("\n")
-        }else{
-            console.log("\tRequirement Subcategory COMPLETED")
-            requirement_json[requirements[i]][requirement_subcategories[j]]["Subcategory Information"]["Completed"] = true
-
-
-
-        }
-        console.log("\n\n")
-   }
-}
-console.log("-------------------------------------------------")
-console.log(requirement_json)
-res.status(200).send(requirement_json)
+    }
+// console.log("-------------------------------------------------")
+// console.log(requirement_json)
+// res.status(200).send(requirement_json)
 });
 
 
