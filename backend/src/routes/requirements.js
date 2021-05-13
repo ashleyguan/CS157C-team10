@@ -54,7 +54,7 @@ async function get_requirement_req(requirement){
         result.records.forEach(record => {       
             // console.log(record) 
             record._fields.forEach(function(field,i){
-                requirements_req.push(field.properties)
+                requirements_req.push(field.properties.title)
                 if (field.properties.hasOwnProperty('units')){
                     requirement_units.push(field.properties.units.low)
                 }else{
@@ -209,74 +209,7 @@ async function get_requirement_subcategories(){
             })
             return filled_sats
         }
-
-        async function get_units(node){
-            var units = 0
-            const session = driver.session();
-            // console.log(`MATCH (n)<-[r:SATISFIES]-(m) WHERE n.title = "${requirement_subcategories_section.title}" RETURN m`)
-            var result =  await session
-            .run(`MATCH (n) WHERE n.title = "${node.title}" RETURN n`).then(result => {
-                // var cur_req = []
-
-                result.records.forEach(record => {
-                    record._fields.forEach(function(field,i){
-                        if (field.properties.hasOwnProperty(units)){
-                            console.log(field)
-                            units = field.properties.units.low
-                        }
-                    })
-                    // filled_sats["Satisfies"] = cur_req
-                })
-            })
-            .catch(function(error) {
-                console.log(error);
-                // console.log(requirement_subcategories_sections)
-            })
-            return units
-        }
-        // requirement_subcategories_sections.forEach(async section => {
-        //     console.log("***********")
-        //     console.log(requirement_subcategories_sections[section])
-        //     // console.log(requirement_subcategories_sections)
-        //     // console.log(section)
-        //     const session = driver.session();
-
-        //     var result =  await session
-        //     .run(`MATCH (n)-[r:REQUIRES]->(m) WHERE n.title = "${requirement_subcategories_sections[section].title}" RETURN m`).then(result => {
-        //         var cur_req = []
-
-        //         result.records.forEach(record => {
-        //             record._fields.forEach(function(field,i){
-        //                 cur_req.push(field.properties.title)
-        //             })
-        //             requirement_subcategories_sections[section]["Requirements"] = cur_req
-        //         })
-        //     })
-        //     .catch(function(error) {
-        //         console.log(error);
-        //         // console.log(requirement_subcategories_sections)
-        //     })
-        //     var result =  await session
-        //     .run(`MATCH (n)<-[r:SATISFIES]-(m) WHERE n.title = "${requirement_subcategories_sections[section].title}" RETURN m`).then(result => {
-        //         var cur_sat = []
-
-        //         result.records.forEach(record => {
-        //             record._fields.forEach(function(field,i){
-        //                 cur_sat.push(field.properties.title)
-        //             })
-        //             // console.log("*********8")
-        //             // console.log(cur_sat)
-        //             requirement_subcategories_sections[section]["Satisfiers"] = cur_sat
-        //         })
-        //     })
-        //     .catch(function(error) {
-        //         console.log(error);
-        //     }).then(() => session.close())  
-        //     // console.log("------------------------")
-        //     // console.log(requirement_subcategories_sections)
-        //     // console.log(section)
-        //     // console.log("**********")
-        // })
+      
     async function fill_requirement_subcategory_reqs(requirement_subcategory){
         //    console.log(`MATCH (n)-[r:REQUIRED]->(m:Course) WHERE n.title = "${requirement_subcategory.title}" return m`)
             const session = driver.session();
@@ -307,36 +240,7 @@ async function get_requirement_subcategories(){
             .catch(function(error) {
                 console.log(error);
             })
-            // console.log(`MATCH (n:\`Requirement Subcategory\`)<-[r:SATISFIES]-(m) WHERE n.title = "${requirement_subcategory}" return m`)
-
-            // var result =  await session
-            // .run(`MATCH (n:\`Requirement Subcategory\`)<-[r:SATISFIES]-(m) WHERE n.title = "${requirement_subcategory}" return m`).then(result => {
-            //     result.records.forEach(record => {
-                  
-            //         // console.log(record) 
-            //         record._fields.forEach(function(field,i){
-            //             switch (field.labels[0]){
-            //                 // case "Subcategory Section":
-            //                 //     console.log("a")
-            //                 //     subcategory_sections.push(field.properties['title'])
-            //                 //     break;
-            //                 case "Course":
-            //                     // console.log("b")
-            //                     satisfying_courses.push(field.properties['title'])
-            //                     satisfying_course_units.push(field.properties.units.low)
-            //                     break;
-            //                 default:
-            //                     console.log(field.labels[0] + " does not have a defined action in get_subcategory_actions");
-            //             }       
-
-            //         })
-            //     })
-            // })
-            // .catch(function(error) {
-            //     console.log(error);
-            // }).then(() => session.close()) 
-    
-
+         
             return required_courses//[[subcategory_sections,subcategory_section_units],[required_courses,required_course_units],[satisfying_courses,satisfying_course_units]]
         }
 
@@ -373,48 +277,6 @@ async function get_requirement_subcategories(){
                 return satisfying_courses//[[subcategory_sections,subcategory_section_units],[required_courses,required_course_units],[satisfying_courses,satisfying_course_units]]
             }
     
-async function get_subcategory_section_requirements(subcategory_section){
-            const session = driver.session();
-
-                var subcategory_section_requirements = []
-                var subcategory_section_requirement_units = []
-
-                var subcategory_section_satisfiers= []
-                var subcategory_section_satisfier_units= []
-
-
-            var result =  await session
-                .run(`MATCH (n:\`Subcategory Section\`)-[r:REQUIRES]->(m) WHERE n.title = "${subcategory_section}" RETURN m`).then(result => {
-                    result.records.forEach(record => {   
-                        // console.log(record) 
-                        record._fields.forEach(function(field,i){
-                            subcategory_section_requirements.push(field.properties['title'])
-                            subcategory_section_requirement_units.push(field.properties.units.low)
-                        })
-                    })
-                })
-                .catch(function(error) {
-                    console.log(error);
-                })
-                // console.log(`MATCH (n:\`Subcategory Section\`)<-[r:SATISFIES]-(m) WHERE n.title = "${subcategory_section}" return m`)
-            var result =  await session
-                .run(`MATCH (n:\`Subcategory Section\`)<-[r:SATISFIES]-(m) WHERE n.title = "${subcategory_section}" return m`).then(result => {
-                    result.records.forEach(record => {   
-                        // console.log(record) 
-                        record._fields.forEach(function(field,i){
-                            subcategory_section_satisfiers.push(field.properties['title'])
-                            subcategory_section_satisfier_units.push(field.properties.units.low)
-                            
-                        })
-                    })
-                })
-                .catch(function(error) {
-                    console.log(error);
-                }).then(() => session.close()) 
-
-            return [[subcategory_section_requirements,subcategory_section_requirement_units],[subcategory_section_satisfiers,subcategory_section_satisfier_units]]
-}
-
 async function get_completed_classes(course){
 //    console.log(`MATCH (n)-[r:REQUIRES *0..]->(m) WHERE n.title = \"${course}\" RETURN m`)
   var completed_courses = []
@@ -453,48 +315,6 @@ async function get_completed_classes(course){
 
     return [completed_courses, completed_course_units,unresolved_prereqs]
 }
-async function get_prereq_options(prereq){
-  // console.log(`MATCH (n)-[r:REQUIRES *0..]->(m) WHERE n.title = \"${course}\" RETURN m`)
-  var prereq_options = []
-  const session = driver.session();
-    var result =  await session
-    .run(`MATCH (n)<-[r:SATISFIES]-(m) WHERE n.title = \"${prereq}\" return m`).then(result => {
-        result.records.forEach(record => {        
-            record._fields.forEach(function(field,i){
-                prereq_options.push(field.properties['title'])
-             })
-        })
-    })
-    .catch(function(error) {
-        console.log(error);
-    })
-    console.log("prereq options: "+prereq_options)
-    return prereq_options
-}
-async function handle_prereq_resolution(prereq){
-     var options = {}
-     options[prereq] = []
-     const session = driver.session();
-    //  console.log(`MATCH (n)-[r:REQUIRES]->(m) WHERE n.title = \"${prereq}\" return m`)
-     var result =  await session
-     .run(`MATCH (n)-[r:REQUIRES]->(m) WHERE n.title = \"${prereq}\" return m`).then(result => {
-         var cur_option = []
-         result.records.forEach(record => {        
-             record._fields.forEach(function(field,i){
-                //  console.log(field)
-                cur_option.push(field.properties['title'])
-              })
-         })
-         options[prereq].push(cur_option)
-     })
-     .catch(function(error) {
-         console.log(error);
-     }).then(() => session.close());
-     console.log("prereq course options: "+options)
-
-     
-     return options
- }
 
 function intersection(setA, setB) {
     setA = new Set(setA)
@@ -539,64 +359,6 @@ async function get_units(title){
  }
 
 
-
-
-// router.route('/verify_course_history').post(async (req, res) => {
-//     // get completed courses
-//     const courses = req.body.studentCH.split('\n')
-//     var completed_courses = []
-//     var unresolved_prereqs = []
-//     for (i = 0;i<courses.length;i++){
-//         var completed_courses_combined = await get_completed_classes(courses[i])
-//         cur_courses = completed_courses_combined[0]
-//         cur_unresolved_prereqs = completed_courses_combined[1]
-//         cur_courses.forEach(course => {
-//             if (!completed_courses.includes(course)){
-//                 completed_courses.push(course)
-//             }
-//         })
-//         cur_unresolved_prereqs.forEach(unresolved_prereq => {
-//             if (!unresolved_prereqs.includes(unresolved_prereq)){
-//                 unresolved_prereqs.push(unresolved_prereq)
-//             }
-//         })
-
-//     }
-//     console.log("Completed Courses "+completed_courses)
-//     console.log("Unresolved Prereqs: " + unresolved_prereqs)
-//     res.status(200).send([completed_courses,unresolved_prereqs]);
-
-// })
-
-// router.route('/get_prereq_options').post(async (req, res) => {
-//     var all_options = []
-//     const sent_prereqs = req.body
-//     console.log("sent prereqs " +sent_prereqs)
-//     for(i=0;i<sent_prereqs.length;i++){
-//         console.log("sending prereq: " + sent_prereqs[i])
-//         var cur_prereq = sent_prereqs[i]
-//         var opts = await get_prereq_options(cur_prereq)
-//         all_options.push(opts)
-        
-//     }
-//     console.log("all options "+all_options)
-
-//     var all_course_options = []
-//     for(j=0;j<all_options.length;j++){
-//         var cur_option = all_options[j]
-//         var course_opts = []
-//         for(k=0;k<cur_option.length;k++){
-//             var opts = await handle_prereq_resolution(cur_option[k])
-//             course_opts.push(opts)
-//         }
-//         all_course_options.push(course_opts)
-//     }
-//     console.log(all_course_options)
-
-//     res.status(200).send(all_course_options)
-// })
-
-
 router.route('/result').post(async (req, res) => {
     var requirement_json = {}
     // get completed courses
@@ -625,10 +387,9 @@ router.route('/result').post(async (req, res) => {
                 unresolved_prereqs.push(unresolved_prereq)
             }
         })
-
+        // completed_courses = completed_courses_combined
     }
     console.log("Completed Courses "+completed_courses)
-    console.log("Unresolved Prereqs: " + unresolved_prereqs)
 
 
     var completed_requirements = []
@@ -742,6 +503,10 @@ router.route('/result').post(async (req, res) => {
     for (i=0;i<completed_courses.length;i++){
         for (j = 0;j<requirement_subcategories.length;j++){
             // console.log(requirement_subcategories[j])
+            if (requirement_subcategories[j] == "Lower Division Computer Science Courses"){
+                console.log("WHOOOOOO THERE= ")
+                console.log(requirement_subcategories[j]['Remaining Required'])
+            }
             if (requirement_subcategories[j]['Remaining Required'].includes(completed_courses[i])){
                 requirement_subcategories[j]['Remaining Required'].splice(requirement_subcategories[j]['Remaining Required'].indexOf(completed_courses[i]),1)
                 requirement_subcategories[j]['Completed Required'].push( completed_courses[i])
@@ -815,12 +580,12 @@ router.route('/result').post(async (req, res) => {
 
         // console.log(subcats)
         // console.log("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
-
+        reqs[i]["Subcategories"] = subcats
         var all_completed = true
 
         for (j=0;j<subcats.length;j++){
             for(k=0;k<requirement_subcategories.length;k++){
-                if (subcats[j].title === requirement_subcategories[k].title){
+                if (subcats[j] === requirement_subcategories[k].title){
                     all_completed = all_completed & requirement_subcategories[k].completed
                 }
                 reqs[i]["Completed"] = all_completed
@@ -829,16 +594,22 @@ router.route('/result').post(async (req, res) => {
             }
         }
     }
-    console.log(reqs)
-    console.log("******************************")
+    const req_json = {
+        "requirements": reqs,
+        "subcategories":requirement_subcategories,
+        "sections": secs,
+        "completed":completed_courses
+    }
+    // console.log(reqs)
+    // console.log("******************************")
 
-    console.log(requirement_subcategories)
-    console.log("******************************")
     // console.log(requirement_subcategories)
-    console.log(secs)
+    // console.log("******************************")
+    // // console.log(requirement_subcategories)
+    // console.log(secs)
 // console.log("-------------------------------------------------")
 // console.log(requirement_json)
-// res.status(200).send(requirement_json)
+res.status(200).send(req_json)
 });
 
 
@@ -847,62 +618,3 @@ module.exports = router;
 
 
 
-
-
-
-
-
-// async function get_requirement_status(course){
-//   //  console.log(`MATCH (n)-[r]-(m:\`Requirement Subcategory\`) WHERE n.title = "${course}" RETURN m`)
-//   const session = driver.session();
-//     var requirements = []
-//     var result =  await session
-//     .run(`MATCH (n)-[r]-(m:\`Requirement Subcategory\`) WHERE n.title = "${course}" RETURN m`).then(result => {
-//         result.records.forEach(record => {       
-//             // console.log(record) 
-//             record._fields.forEach(function(field,i){
-//                 console.log(field)
-//             })
-//             //     if (!completed_courses.includes(field.properties['title'])){
-//             //         completed_courses.push(field.properties['title'])
-//             //     } 
-//             // })
-//         })
-//     })
-//     .catch(function(error) {
-//         console.log(error);
-//     })
-//    // return completed_courses
-// }
-
-
-
-
-
-
-
-// async function get_subcategory_sections(requirement_subcategory){
-// //    console.log(`MATCH (n:\`Requirement Subcategory\`)-[r]-(m:\`Subcategory Section\`) WHERE n.title = "${requirement_subcategory}" RETURN m`)
-//     const session = driver.session();
-//     var subcategory_sections = []
-//     var result =  await session
-//     .run(`MATCH (n:\`Requirement Subcategory\`)-[r]-(m:\`Subcategory Section\`) WHERE n.title = "${requirement_subcategory}" RETURN m`).then(result => {
-//         result.records.forEach(record => {       
-//             // console.log(record) 
-//             record._fields.forEach(function(field,i){
-               
-//                 subcategory_sections.push(field.properties['title'])
-//                 console.log(field)
-//             })
-//         })
-//     })
-//     .catch(function(error) {
-//         console.log(error);
-//     })
-
-//     // console.log("Requirements: " + requirement_subcategories)get_subcategory_requirements
-//     return subcategory_sections
-// }
-
-
-    
