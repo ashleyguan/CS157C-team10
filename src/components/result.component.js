@@ -10,7 +10,6 @@ export default class Result extends Component {
     constructor(props) {
         super(props);
     }
-
     get_data(){
         console.log("brrr")
         console.log((sessionStorage.getItem("data")))
@@ -243,7 +242,7 @@ export default class Result extends Component {
             if(reqs[i].completed){
                 sub_table.push("Completed")
             }
-            req_table.push(<Collapsible trigger={reqs[i].title}>{sub_table}</Collapsible>)
+            req_table.push(<Collapsible lazyRender overflowWhenOpen = 'auto'trigger={reqs[i].title}>{sub_table}</Collapsible>)
         }
         return [completed,req_table]
     }
@@ -251,12 +250,12 @@ export default class Result extends Component {
     render() {     
         var data = this.get_data()
         var completed = JSON.stringify(data[0])
-        var table = data[1]
-	 return (<div>
-         <p>Completed courses: {completed}</p>
-         {table}
-         </div>
-         
+        var  table= data[1]
+	 return (
+     <div>
+        <p>{completed}</p>
+        {data}
+    </div>
          )
          
 	}
