@@ -128,10 +128,12 @@ export default class Result extends Component {
                             }
 
                             break
-                        // case "Subcategory Sections":
-                        //     break
-                        default:
-                            console.log("HRAYR GIVE ME A CASE: " + sub_key)
+                        case "notes":
+                            required_sec.push(<Collapsible trigger="Notes">{subs[j][sub_key]}</Collapsible>)
+                            break
+                        case "units":
+                            required_sec.push(<Collapsible trigger="Required Units">{subs[j][sub_key].low}</Collapsible>)
+                            break   
                         
                     }
 
@@ -157,8 +159,114 @@ export default class Result extends Component {
                     // console.log(subs[j])
                     for(var k=0;k<secs.length;k++){
                         if(subs[j]["Subcategory Sections"].includes(secs[k].title)){
+                            console.log("KILL ME")
+                            console.log(secs[k])
+                            var required_sec = []
 
-                        sec_table.push(<Collapsible trigger={secs[k].title}></Collapsible>)
+                            for (var sub_key in secs[k]){
+                                // console.log("*&*******")
+                                // console.log(sub_key)
+                                // console.log(secs[k][sub_key])
+            
+            
+            
+                                var sec_subcat = []
+            
+                                switch (sub_key){
+                                    case "Required":
+                                        var course_list = []
+                                        for (var course in secs[k][sub_key]){
+            
+                                            // console.log("HRAYUR")
+                                            // console.log(course)
+                                            // console.log(secs[k][sub_key][course])
+                                            course_list.push(<Collapsible trigger={secs[k][sub_key][course]}></Collapsible>)
+                                        }
+                                        if (course_list.length > 0){
+                                            required_sec.push(<Collapsible trigger="Required Courses">{course_list}</Collapsible>)
+                                        }
+                                        break
+                                    case "Completed Required":
+                                        var course_list = []
+            
+                                        for (var course in secs[k][sub_key]){
+            
+                                            // console.log("HRAYUR")
+                                            // console.log(course)
+                                            // console.log(secs[k][sub_key][course])
+                                            course_list.push(<Collapsible trigger={secs[k][sub_key][course]}></Collapsible>)
+                                        }
+                                        if (course_list.length > 0){
+                                            required_sec.push(<Collapsible trigger="Completed Required Courses">{course_list}</Collapsible>)
+                                        }
+                                        break
+                                    case "Remaining Required":
+                                        var course_list = []
+            
+                                        for (var course in secs[k][sub_key]){
+            
+                                            // console.log("HRAYUR")
+                                            // console.log(course)
+                                            // console.log(secs[k][sub_key][course])
+                                            course_list.push(<Collapsible trigger={secs[k][sub_key][course]}></Collapsible>)
+                                        }
+                                        if (course_list.length > 0){
+                                            required_sec.push(<Collapsible trigger="Remaining Required Courses">{course_list}</Collapsible>)
+                                        }
+                                        break
+                                    case "Completed Satisfiers":
+                                        var course_list = []
+            
+                                        for (var course in secs[k][sub_key]){
+            
+                                            // console.log("HRAYUR")
+                                            // console.log(course)
+                                            // console.log(secs[k][sub_key][course])
+                                            // course_list.push(<Collapsible trigger={secs[k][sub_key][course]}></Collapsible>)
+                                        }
+                                        if (course_list.length > 0){
+                                            required_sec.push(<Collapsible trigger="Completed Satisfying Courses">{course_list}</Collapsible>)
+                                        }
+                                        break
+                                    case "Remaining Satisfiers":
+                                        var course_list = []
+            
+                                        for (var course in secs[k][sub_key]){
+            
+                                            // console.log("HRAYUR")
+                                            // console.log(course)
+                                            // console.log(secs[k][sub_key][course])
+                                            course_list.push(<Collapsible trigger={secs[k][sub_key][course]}></Collapsible>)
+                                        }
+                                        if (course_list.length > 0){
+                                            required_sec.push(<Collapsible trigger="Available Satisfying Courses">{course_list}</Collapsible>)
+                                        }
+                                        break
+                                    case "Completed Units":
+                                        required_sec.push(<Collapsible trigger="Completed Units">{secs[k][sub_key]}</Collapsible>)
+            
+                                        break
+                                    case "Completed":
+                                        if (secs[k][sub_key] === true){
+                                            required_sec.push(<Collapsible trigger="Completed">You have completed this requirement! Good job!</Collapsible>)
+            
+                                        }else{
+                                            required_sec.push(<Collapsible trigger="Not Completed">You have not completed this requirement.</Collapsible>)
+                                        }
+            
+                                        break
+                                    case "notes":
+                                        required_sec.push(<Collapsible trigger="Notes">{secs[k][sub_key]}</Collapsible>)
+                                        break
+                                    case "units":
+                                        required_sec.push(<Collapsible trigger="Required Units">{secs[k][sub_key].low}</Collapsible>)
+                                        break   
+                                    
+                                }
+            
+            
+                            }
+                        sec_table.push(<Collapsible trigger={secs[k].title}>{required_sec}</Collapsible>)
                             
                         }
                     }
