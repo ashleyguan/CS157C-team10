@@ -49,10 +49,6 @@ export default class Result extends Component {
                         case "Required":
                             var course_list = []
                             for (var course in subs[j][sub_key]){
-
-                                // console.log("HRAYUR")
-                                // console.log(course)
-                                // console.log(subs[j][sub_key][course])
                                 course_list.push(<Collapsible trigger={subs[j][sub_key][course]}></Collapsible>)
                             }
                             if (course_list.length > 0){
@@ -63,10 +59,6 @@ export default class Result extends Component {
                             var course_list = []
 
                             for (var course in subs[j][sub_key]){
-
-                                // console.log("HRAYUR")
-                                // console.log(course)
-                                // console.log(subs[j][sub_key][course])
                                 course_list.push(<Collapsible trigger={subs[j][sub_key][course]}></Collapsible>)
                             }
                             if (course_list.length > 0){
@@ -77,10 +69,6 @@ export default class Result extends Component {
                             var course_list = []
 
                             for (var course in subs[j][sub_key]){
-
-                                // console.log("HRAYUR")
-                                // console.log(course)
-                                // console.log(subs[j][sub_key][course])
                                 course_list.push(<Collapsible trigger={subs[j][sub_key][course]}></Collapsible>)
                             }
                             if (course_list.length > 0){
@@ -91,10 +79,6 @@ export default class Result extends Component {
                             var course_list = []
 
                             for (var course in subs[j][sub_key]){
-
-                                // console.log("HRAYUR")
-                                // console.log(course)
-                                // console.log(subs[j][sub_key][course])
                                 course_list.push(<Collapsible trigger={subs[j][sub_key][course]}></Collapsible>)
                             }
                             if (course_list.length > 0){
@@ -105,10 +89,6 @@ export default class Result extends Component {
                             var course_list = []
 
                             for (var course in subs[j][sub_key]){
-
-                                // console.log("HRAYUR")
-                                // console.log(course)
-                                // console.log(subs[j][sub_key][course])
                                 course_list.push(<Collapsible trigger={subs[j][sub_key][course]}></Collapsible>)
                             }
                             if (course_list.length > 0){
@@ -176,10 +156,6 @@ export default class Result extends Component {
                                     case "Required":
                                         var course_list = []
                                         for (var course in secs[k][sub_key]){
-            
-                                            // console.log("HRAYUR")
-                                            // console.log(course)
-                                            // console.log(secs[k][sub_key][course])
                                             course_list.push(<Collapsible trigger={secs[k][sub_key][course]}></Collapsible>)
                                         }
                                         if (course_list.length > 0){
@@ -190,10 +166,6 @@ export default class Result extends Component {
                                         var course_list = []
             
                                         for (var course in secs[k][sub_key]){
-            
-                                            // console.log("HRAYUR")
-                                            // console.log(course)
-                                            // console.log(secs[k][sub_key][course])
                                             course_list.push(<Collapsible trigger={secs[k][sub_key][course]}></Collapsible>)
                                         }
                                         if (course_list.length > 0){
@@ -204,10 +176,6 @@ export default class Result extends Component {
                                         var course_list = []
             
                                         for (var course in secs[k][sub_key]){
-            
-                                            // console.log("HRAYUR")
-                                            // console.log(course)
-                                            // console.log(secs[k][sub_key][course])
                                             course_list.push(<Collapsible trigger={secs[k][sub_key][course]}></Collapsible>)
                                         }
                                         if (course_list.length > 0){
@@ -218,11 +186,7 @@ export default class Result extends Component {
                                         var course_list = []
             
                                         for (var course in secs[k][sub_key]){
-            
-                                            // console.log("HRAYUR")
-                                            // console.log(course)
-                                            // console.log(secs[k][sub_key][course])
-                                            // course_list.push(<Collapsible trigger={secs[k][sub_key][course]}></Collapsible>)
+                                            course_list.push(<Collapsible trigger={secs[k][sub_key][course]}></Collapsible>)
                                         }
                                         if (course_list.length > 0){
                                             required_sec.push(<Collapsible trigger="Completed Satisfying Courses">{course_list}</Collapsible>)
@@ -232,10 +196,6 @@ export default class Result extends Component {
                                         var course_list = []
             
                                         for (var course in secs[k][sub_key]){
-            
-                                            // console.log("HRAYUR")
-                                            // console.log(course)
-                                            // console.log(secs[k][sub_key][course])
                                             course_list.push(<Collapsible trigger={secs[k][sub_key][course]}></Collapsible>)
                                         }
                                         if (course_list.length > 0){
