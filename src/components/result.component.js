@@ -95,7 +95,7 @@ export default class Result extends Component {
                                 // console.log("HRAYUR")
                                 // console.log(course)
                                 // console.log(subs[j][sub_key][course])
-                                // course_list.push(<Collapsible trigger={subs[j][sub_key][course]}></Collapsible>)
+                                course_list.push(<Collapsible trigger={subs[j][sub_key][course]}></Collapsible>)
                             }
                             if (course_list.length > 0){
                                 required_sec.push(<Collapsible trigger="Completed Satisfying Courses">{course_list}</Collapsible>)
