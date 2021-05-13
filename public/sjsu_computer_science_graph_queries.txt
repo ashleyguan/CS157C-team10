@@ -35,7 +35,6 @@ CREATE (n:`Requirement Subcategory` {title:"Lower Division Math Courses"});
 CREATE (n:`Course` {title:"CS 100W",subject:"Technical Writing Workshop",units:3,summary:"Advanced writing through preparation of technical reports and presentations. Improving skills for writing subject-related reports, project proposals and personal resumes through practice and evaluation. Course assignments will be related to issues concerning careers in computer science."});
 CREATE (n:`Course` {title:"MATH 30",subject:"Calculus I",units:3,summary:"Introduction to calculus including limits, continuity, differentiation, applications and introduction to integration. Graphical, algebraic and numerical methods of solving problems."});
 CREATE (n:`Course` {title:"MATH 31",subject:"Calculus II",units:4,summary:"Definite and indefinite integration with applications. Sequences and series. Graphical, algebraic and numerical methods of solving problems."});
-CREATE (n:`Course Option` {title:"MATH 31 Prerequisite"});
 CREATE (n:`Course` {title:"MATH 42",subject:"Discrete Mathematics",units:3, summary:"Sets, logic, methods of proof including mathematical induction, functions, relations, elementary combinatorics, probability, Boolean algebras.",`Requirement Designation`:["B4: Mathematical Concepts"]});
 CREATE (n:`Course` {title:"MATH 39",subject:"Linear Algebra I", units:3,summary:"Sets, logic, methods of proof including mathematical induction, functions, relations, elementary combinatorics, probability, Boolean algebras."});
 CREATE (n:`Course` {title:"PHIL 134",subject:"Computers, Ethics and Society", units: 3,summary:"The nature of privacy in a technologically interconnected world; the role of computer technologies in the exercise of the human intellect and imagination with respect to freedom of expression and the social good; rights and responsibilities of intellectual property ownership.",`Requirement Designations`:["V: Culture, Civil & Global Understanding"],subcategory:"CSCI PHIL 134"});
@@ -53,7 +52,7 @@ CREATE (n:`Course` {title:"PHYS 51",subject:"General Physics/Electricity and Mag
 CREATE (n:`Subcategory Section` {title:"Lower Division Science Courses", units: 9});
 CREATE (n:`Requirement Subcategory` {title:"Special Math Course"});
 CREATE (n:`Course` {title:"MATH 32",subject:"Calculus III", units: 3,summary:"Functions of more than one variable, partial derivatives, multiple integrals and vector calculus. Graphical, algebraic and numerical methods of solving problems."});
-CREATE (n:`Course Option` {title:"MATH 32 Prerequisite"});
+
 CREATE (n:`Course` {title:"MATH 142",subject:"Introduction to Combinatorics", units: 3,summary:"Sets, permutations, combinations, probability, mathematical induction, counting techniques, generating functions, partitions, recurrence relations, inclusion-exclusion. Polya’s theorem and applications to computer science, mathematics, engineering and physical sciences."});
 CREATE (n:`Course` {title:"MATH 161A",subject:"Applied Probability and Statistics I", units: 3,summary:"Descriptive and inferential statistics. Collection and analysis of data, discrete and continuous probability models, random variables, Central Limit Theorem, confidence intervals, hypothesis testing."});
 CREATE (n:`Requirement` {title:"CSCI Major Requirements", notes:"BS Computer Science (RG1078). A grade of 'C-'' or better is required for courses being used to meet any requirement in any minor or major offered by the Department of Computer Science, including preparation courses.", minimum_gpa: 2.0});
@@ -62,7 +61,8 @@ CREATE (n:`Course` {title:"CS 49J",subject:"Programming in Java", units: 3,summa
 CREATE (n:`Course` {title:"CS 49C",subject:"Programming in C", units: 3,summary:"Beginning course in the C language."});
 CREATE (n:`Course` {title:"CS 46A",subject:"Introduction to Programming", units: 3,summary:"Basic skills and concepts of computer programming in an object-oriented approach using Java. Classes, methods and argument passing, control structures, iteration. Basic graphical user interface programming. Problem solving, class discovery and stepwise refinement. Programming and documentation style. Weekly hands-on activity."});
 CREATE (n:`Course` {title:"CS 46B",subject:"Introduction to Data Structures", units: 3,summary:"Stacks and queues, recursion, lists, dynamic arrays, binary search trees. Iteration over collections. Hashing. Searching, elementary sorting. Big-O notation. Standard collection classes. Weekly hands-on activity."});
-CREATE (n:`Course Option` {title:"CS 46B Prerequisite"});
+
+
 CREATE (n:`Course` {title:"CS 47",subject:"Introduction to Computer Systems", units: 3,summary:"Instruction sets, assembly language and assemblers, linkers and loaders, data representation and manipulation, interrupts, pointers, function calls, argument passing, and basic gate-level digital logic design."});
 CREATE (n:`Requirement Subcategory` {title:"Upper Division Computer Science Courses",units:37});
 CREATE (n:`Course` {title:"CS 146",subject:"Data Structures and Algorithms", units: 3,summary:"Implementations of advanced tree structures, priority queues, heaps, directed and undirected graphs. Advanced searching and sorting (radix sort, heapsort, mergesort, and quicksort). Design and analysis of data structures and algorithms. Divide-and-conquer, greedy, and dynamic programming algorithm design techniques."});
@@ -72,20 +72,18 @@ CREATE (n:`Course` {title:"CS 151",subject:"Object-Oriented Design", units: 3,su
 CREATE (n:`Course` {title:"CS 152",subject:"Programming Paradigms", units: 3,summary:"Programming language syntax and semantics. Data types and type checking. Scope, bindings, and environments. Functional and logic programming paradigms, and comparison to other paradigms. Extensive coverage of a functional language."});
 CREATE (n:`Course` {title:"CS 154",subject:"Formal Languages and Computability", units: 3,summary:"Finite automata, context-free languages, Turing machines, computability."});
 CREATE (n:`Course` {title:"CS 160",subject:"Software Engineering", units: 3,summary:"Software engineering principles, software process and process models, requirements elicitation and analysis, design, configuration management, quality control, project planning, social and ethical issues. Required team-based software development, including written requirements specification and design documentation, oral presentation, and tool use."});
-CREATE (n:`Requirement Subcategory` {title:"CSCI Additional Upper Division Course (Deep Course)"});
+CREATE (n:`Requirement Subcategory` {title:"CSCI Additional Upper Division Course (Deep Course)", units: 3});
 CREATE (n:`Requirement Subcategory` {title:"CSCI Major Electives",notes:"At least 2 courses must have CS 46A as a required direct or indirect prerequisite. CS 190I or at most 3 units of CS 190 may be used. Additionally, at most 3 units of CS 85 and CS 185 may be used. CS 180, CS 180H, and MATH 203 may be used with prior approval. (RQ99)",units: 17});
 CREATE (n:`Subcategory Section` {title:"CSCI Computer Science Upper Division Electives", notes:"Complete at least 2 courses. (RQ99, LI10)", units:6});
 CREATE (n:`Subcategory Section` {title:"CSCI Qualifying Courses", notes:"Complete 11 maximum units. Courses include qualifying CS lower and upper division and math. CS 85C, CS 49C and CS 49J can be used with department approval. (RQ99, LI40)", maximum_units:11});
 CREATE (n:`Course` {title:"CS 116A",subject:"Introduction to Computer Graphics",units: 3,summary:"Vector geometry, geometric transformations and the graphics pipeline. Basic raster graphics algorithms for drawing discrete lines, clipping, visible surface determination and shading. Display of curves and surfaces. Graphics data structures."});
 CREATE (n:`Course` {title:"CS 116B",subject:"Computer Graphics Algorithms", units: 3,summary:"In-depth discussion of algorithms and techniques used in computer graphics and their implementation. Topics include: animation, fractals, anti-aliasing, fill algorithms, visible surface algorithms, color and shading, ray tracing, radiosity and texture maps. Substantial programming required."});
 CREATE (n:`Course` {title:"CS 123A",subject:"Bioinformatics I",units: 3,summary:"Introduction to the main public domain tools, databases and methods in bioinformatics. Analysis of algorithms behind the most successful tools, such as the local and global sequence alignment packages, and the underlying methods used in fragment assembly packages. Solution of complex biological questions requiring modification of standard code."});
-CREATE (n:`Course Option` {title:"CS 123A Prerequisite Option 1"});
-CREATE (n:`Course Option` {title:"CS 123A Prerequisite Option 2"});
 CREATE (n:`Course` {title:"CS 123B",subject:"Bioinformatics II", units: 3,summary:"Computational methods used for searching, classifying, analyzing, and modeling protein sequences. Tools for analyzing DNA and RNA sequences. More advanced topics, such as genetic algorithms and simulated annealing, which can be used to address folding problems."});
 CREATE (n:`Course` {title:"CS 153",subject:"Concepts of Compiler Design", units: 3,summary:"Theoretical aspects of compiler design, including parsing context free languages, lexical analysis, translation specification and machine-independent code generation. Programming projects to demonstrate design topics."});
 CREATE (n:`Course` {title:"CS 157A",subject:"Introduction to Database Management Systems",units:3,summary:"Current, classical database systems. Entity-relationship and enhanced entity models. Relational model, algebra, calculus. Current, emerging SQL standard. Embedded, Dynamic SQL. Application perspective on transactions and security. Interactive and programmatic interfaces to database systems. Application programming project using commercial database system."});
 CREATE (n:`Course` {title:"CS 157B",subject:"Database Management Systems II",units: 3,summary:"Survey course. Object-oriented data model, definition language, query language. Object relational database systems. Database trends like active, temporal, multimedia, deductive databases. Web database topics, namely, architectures, introduction to interface languages. Team projects."});
-CREATE (n:`Course` {title:"CS 157C",subject:"NoSQL Database Systems",summary:"NoSQL Data Models: Key-Value, Wide Column, Document, and Graph Stores. CAP Theorem. Distribution Models. Current NoSQL Databases: Configuration and Deployment, CRUD operations, Indexing, Replication, and Sharding. Public Data Sets. API Coding and Application Development.  NoSQL in the Cloud. Team Project."});
+CREATE (n:`Course` {title:"CS 157C",subject:"NoSQL Database Systems",units:3,summary:"NoSQL Data Models: Key-Value, Wide Column, Document, and Graph Stores. CAP Theorem. Distribution Models. Current NoSQL Databases: Configuration and Deployment, CRUD operations, Indexing, Replication, and Sharding. Public Data Sets. API Coding and Application Development.  NoSQL in the Cloud. Team Project."});
 CREATE (n:`Course` {title:"CS 158A",subject:"Computer Networks",units:3,summary:"Introduction to computer networks, including network layered architectures, local and wide area networks, mobile wireless networks, Internet TCP/IP protocol suite, network resource management, network programming, network performance, network security, network applications."});
 CREATE (n:`Course` {title:"CS 158B",subject:"Computer Network Management",units: 3,summary:"Principles and technologies of network management: reference models, functions (fault, configuration, performance, security and accounting management), management information, communication protocols, integration, and assessment. Network security and cyber defense: cryptography, key distribution, authentication protocols, network attacks, access control, and example systems."});
 CREATE (n:`Course` {title:"CS 161",subject:"Software Project",units: 3,summary:"A substantial project based on material from an advanced area of computer science. Includes lectures on the project topic and the design and testing of software systems. At least 50% of the course grade to be based on the project."});
@@ -155,11 +153,11 @@ match (a), (b) where a.title ="CS 49C" and b.title = "SPRING" CREATE (a)-[r:OFFE
 match (a), (b) where a.title ="Lower Division Computer Science Courses" and b.title = "CS 46A" CREATE (a)-[r:REQUIRES]->(b);
 match (a), (b) where a.title ="CS 46A" and b.title = "FALL" CREATE (a)-[r:OFFERED]->(b);
 match (a), (b) where a.title ="CS 46A" and b.title = "SPRING" CREATE (a)-[r:OFFERED]->(b);
-match (a), (b) where a.title ="CS 46A" and b.title = "CS 46B Prerequisite" CREATE (a)-[r:SATISFIES]->(b);
-match (a), (b) where a.title ="CS 49J" and b.title = "CS 46B Prerequisite" CREATE (a)-[r:SATISFIES]->(b);
+
 match (a), (b) where a.title ="Lower Division Computer Science Courses" and b.title = "CS 46B" CREATE (a)-[r:REQUIRES]->(b);
 match (a), (b) where a.title ="CS 46B" and b.title = "FALL" CREATE (a)-[r:OFFERED]->(b);
 match (a), (b) where a.title ="CS 46B" and b.title = "SPRING" CREATE (a)-[r:OFFERED]->(b);
+match (a), (b) where a.title ="CS 46B" and b.title = "CS 46A" CREATE (a)-[r:REQUIRES]->(b);
 match (a), (b) where a.title ="CS 47" and b.title = "CS 46B" CREATE (a)-[r:REQUIRES]->(b);
 match (a), (b) where a.title ="Lower Division Computer Science Courses" and b.title = "CS 47" CREATE (a)-[r:REQUIRES]->(b);
 match (a), (b) where a.title ="CS 47" and b.title = "FALL" CREATE (a)-[r:OFFERED]->(b);
@@ -181,6 +179,7 @@ match (a), (b) where a.title ="Upper Division Computer Science Courses" and b.ti
 match (a), (b) where a.title ="CS 152" and b.title = "FALL" CREATE (a)-[r:OFFERED]->(b);
 match (a), (b) where a.title ="CS 152" and b.title = "SPRING" CREATE (a)-[r:OFFERED]->(b);
 match (a), (b) where a.title ="Upper Division Computer Science Courses" and b.title = "CS 154" CREATE (a)-[r:REQUIRES]->(b);
+
 match (a), (b) where a.title ="CS 154" and b.title = "FALL" CREATE (a)-[r:OFFERED]->(b);
 match (a), (b) where a.title ="CS 154" and b.title = "SPRING" CREATE (a)-[r:OFFERED]->(b);
 match (a), (b) where a.title ="Upper Division Computer Science Courses" and b.title = "CS 160" CREATE (a)-[r:REQUIRES]->(b);
@@ -201,12 +200,6 @@ match (a), (b) where a.title ="CS 116B" and b.title = "CSCI Additional Upper Div
 match (a), (b) where a.title ="CS 11B" and b.title = "SPRING" CREATE (a)-[r:OFFERED]->(b);
 match (a), (b) where a.title ="CS 123A" and b.title = "CSCI Computer Science Upper Division Electives" CREATE (a)-[r:SATISFIES]->(b);
 match (a), (b) where a.title ="CS 123A" and b.title = "CSCI Qualifying Courses" CREATE (a)-[r:SATISFIES]->(b);
-match (a), (b) where a.title ="CS 123A Prerequisite Option 1" and b.title = "CS 123A" CREATE (a)-[r:SATISFIES]->(b);
-match (a), (b) where a.title ="CS 123A Prerequisite Option 1" and b.title = "BIOL 30" CREATE (a)-[r:REQUIRES]->(b);
-match (a), (b) where a.title ="CS 123A Prerequisite Option 1" and b.title = "BIOL 31" CREATE (a)-[r:REQUIRES]->(b);
-match (a), (b) where a.title ="CS 123A Prerequisite Option 2" and b.title = "CS 123A" CREATE (a)-[r:SATISFIES]->(b);
-match (a), (b) where a.title ="CS 123A Prerequisite Option 2" and b.title = "CS 46A" CREATE (a)-[r:REQUIRES]->(b);
-match (a), (b) where a.title ="CS 123A Prerequisite Option 2" and b.title = "CS46B" CREATE (a)-[r:REQUIRES]->(b);
 match (a), (b) where a.title ="CS 123A" and b.title = "FALL" CREATE (a)-[r:OFFERED]->(b);
 match (a), (b) where a.title ="CS 123A" and b.title = "SPRING" CREATE (a)-[r:OFFERED]->(b);
 match (a), (b) where a.title ="CS 123B" and b.title = "CS 123A" CREATE (a)-[r:REQUIRES]->(b);
@@ -297,9 +290,7 @@ match (a), (b) where a.title ="CS 108" and b.title = "CSCI Qualifying Courses" C
 match (a), (b) where a.title ="CS 108" and b.title = "FALL" CREATE (a)-[r:OFFERED]->(b);
 match (a), (b) where a.title ="CS 108" and b.title = "SPRING" CREATE (a)-[r:OFFERED]->(b);
 match (a), (b) where a.title = "MATH 30" and  b.title = "GE: B4 Mathematical Concepts" CREATE (a)-[r:SATISFIES]->(b);
-match (a), (b) where a.title = "MATH 31" and  b.title = "MATH 31 Prerequisite" CREATE (a)-[r:REQUIRES]->(b);
-match (a), (b) where a.title = "MATH 30" and  b.title = "MATH 31 Prerequisite" CREATE (a)-[r:SATISFIES]->(b);
-match (a), (b) where a.title = "AP Calculus AB" and  b.title = "MATH 31 Prerequisite" CREATE (a)-[r:SATISFIES]->(b);
+
 match (a), (b) where a.title = "MATH 31" and  b.title = "GE: B4 Mathematical Concepts" CREATE (a)-[r:SATISFIES]->(b);
 match (a), (b) where a.title = "MATH 39" and  b.title = "MATH 31" CREATE (a)-[r:REQUIRES]->(b);
 match (a), (b) where a.title = "PHIL 134" and  b.title = "WST" CREATE (a)-[r:REQUIRES]->(b);
@@ -338,9 +329,6 @@ match (a), (b) where a.title ="METR 10" and b.title = "Lower Division Science Co
 match (a), (b) where a.title ="PHYS 50" and b.title = "Lower Division Science Courses" CREATE (a)-[r:SATISFIES]->(b);
 match (a), (b) where a.title ="PHYS 51" and b.title = "Lower Division Science Courses" CREATE (a)-[r:SATISFIES]->(b);
 
-match (a), (b) where a.title = "MATH 32" and  b.title = "MATH 32 Prerequisite" CREATE (a)-[r:REQUIRES]->(b);
-match (a), (b) where a.title = "MATH 32 Prerequisite" and  b.title = "AP Calculus BC" CREATE (a)-[r:SATISFIES]->(b);
-match (a), (b) where a.title = "MATH 32 Prerequisite" and  b.title = "MATH 31" CREATE (a)-[r:SATISFIES]->(b);
 match (a), (b) where a.title = "MATH 32" and  b.title = "Special Math Course" CREATE (a)-[r:SATISFIES]->(b);
 match (a), (b) where a.title = "MATH 32" and  b.title = "GE: B4 Mathematical Concepts" CREATE (a)-[r:SATISFIES]->(b);
 match (a), (b) where a.title = "MATH 142" and  b.title = "MATH 32" CREATE (a)-[r:REQUIRES]->(b);
@@ -348,8 +336,7 @@ match (a), (b) where a.title = "MATH 142" and  b.title = "MATH 42" CREATE (a)-[r
 match (a), (b) where a.title = "MATH 142" and  b.title = "Special Math Course" CREATE (a)-[r:SATISFIES]->(b);
 match (a), (b) where a.title = "MATH 161A" and  b.title = "MATH 31" CREATE (a)-[r:REQUIRES]->(b);
 match (a), (b) where a.title = "MATH 161A" and  b.title = "Special Math Course" CREATE (a)-[r:SATISFIES]->(b);
-match (a), (b) where a.title = "CS 46B" and  b.title = "CS 46B Prerequisite" CREATE (a)-[r:REQUIRES]->(b);
-match (a), (b) where a.title = "CS 146" and  b.title =  "MATH 30"CREATE (a)-[r:REQUIRES]->(b);
+match (a), (b) where a.title = "CS 146" and  b.title =  "MATH 30" CREATE (a)-[r:REQUIRES]->(b);
 match (a), (b) where a.title = "CS 146" and  b.title = "MATH 42" CREATE (a)-[r:REQUIRES]->(b);
 match (a), (b) where a.title = "CS 146" and  b.title = "CS 49J" CREATE (a)-[r:REQUIRES]->(b);
 match (a), (b) where a.title = "CS 146" and  b.title = "CS 46B" CREATE (a)-[r:REQUIRES]->(b);
