@@ -1,3 +1,4 @@
+
 .Collapsible {
   background-color: white;
   
@@ -10,6 +11,7 @@
   border: 50px solid white;
   border-top: 0;
   border-bottom: 0;
+  overflowWhenOpen: "scroll";
 
   p {
     margin-bottom: 10px;
@@ -29,10 +31,10 @@
   text-decoration: none;
   color: gray;
   position: relative;
-  border: 1px solid white;
+  border: 1px solid #ffb913;
   padding: 10px;
-  background: #282c34;
-  color: white;
+  background: #0035aa;
+  color: #ffb913;
 
 
   &:after {
