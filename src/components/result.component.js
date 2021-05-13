@@ -50,14 +50,13 @@ export default class Result extends Component {
                             var course_list = []
                             for (var course in subs[j][sub_key]){
 
-                                console.log("HRAYUR")
-                                console.log(course)
-                                console.log(subs[j][sub_key][course])
+                                // console.log("HRAYUR")
+                                // console.log(course)
+                                // console.log(subs[j][sub_key][course])
                                 course_list.push(<Collapsible trigger={subs[j][sub_key][course]}></Collapsible>)
                             }
                             if (course_list.length > 0){
-
-                            required_sec.push(<Collapsible trigger="Required Courses">{course_list}</Collapsible>)
+                                required_sec.push(<Collapsible trigger="Required Courses">{course_list}</Collapsible>)
                             }
                             break
                         case "Completed Required":
@@ -71,8 +70,7 @@ export default class Result extends Component {
                                 course_list.push(<Collapsible trigger={subs[j][sub_key][course]}></Collapsible>)
                             }
                             if (course_list.length > 0){
-
-                            required_sec.push(<Collapsible trigger="Completed Required Courses">{subs[j][sub_key]}</Collapsible>)
+                                required_sec.push(<Collapsible trigger="Completed Required Courses">{course_list}</Collapsible>)
                             }
                             break
                         case "Remaining Required":
@@ -86,22 +84,7 @@ export default class Result extends Component {
                                 course_list.push(<Collapsible trigger={subs[j][sub_key][course]}></Collapsible>)
                             }
                             if (course_list.length > 0){
-
-                            required_sec.push(<Collapsible trigger="Remaining Required Courses">{course_list}</Collapsible>)
-                            }
-                            break
-                        case "Satisfiers":
-                            var course_list = []
-
-                            for (var course in subs[j][sub_key]){
-
-                                // console.log("HRAYUR")
-                                // console.log(course)
-                                // console.log(subs[j][sub_key][course])
-                                course_list.push(<Collapsible trigger={subs[j][sub_key][course]}></Collapsible>)
-                            }
-                            if (course_list.length > 0){
-                            required_sec.push(<Collapsible trigger="Satisfying Courses">{course_list}</Collapsible>)
+                                required_sec.push(<Collapsible trigger="Remaining Required Courses">{course_list}</Collapsible>)
                             }
                             break
                         case "Completed Satisfiers":
@@ -118,21 +101,20 @@ export default class Result extends Component {
                                 required_sec.push(<Collapsible trigger="Completed Satisfying Courses">{course_list}</Collapsible>)
                             }
                             break
-                        // case "Remaining Satisfiers":
-                        //     var course_list = []
+                        case "Remaining Satisfiers":
+                            var course_list = []
 
-                        //     for (var course in subs[j][sub_key]){
+                            for (var course in subs[j][sub_key]){
 
-                        //         // console.log("HRAYUR")
-                        //         // console.log(course)
-                        //         // console.log(subs[j][sub_key][course])
-                        //         course_list.push(<Collapsible trigger={subs[j][sub_key][course]}></Collapsible>)
-                        //     }
-                        //     if (course_list.length > 0){
-
-                        //     required_sec.push(<Collapsible trigger="Available Satisfying Courses">{course_list}</Collapsible>)
-                        //     }
-                        //     break
+                                // console.log("HRAYUR")
+                                // console.log(course)
+                                // console.log(subs[j][sub_key][course])
+                                course_list.push(<Collapsible trigger={subs[j][sub_key][course]}></Collapsible>)
+                            }
+                            if (course_list.length > 0){
+                                required_sec.push(<Collapsible trigger="Available Satisfying Courses">{course_list}</Collapsible>)
+                            }
+                            break
                         case "Completed Units":
                             required_sec.push(<Collapsible trigger="Completed Units">{subs[j][sub_key]}</Collapsible>)
 
@@ -198,13 +180,13 @@ export default class Result extends Component {
         return [completed,req_table]
     }
     
-
     render() {     
         var data = this.get_data()
-        var completed = data[0]
+        var completed = JSON.stringify(data[0])
         var table = data[1]
 	 return (<div>
-         <p>{table}</p>
+         <p>Completed courses: {completed}</p>
+         {table}
          </div>
          
          )
