@@ -146,7 +146,7 @@ async function get_requirement_subcategories(){
                     result.records.forEach(record => {
                         var cur_req = {}
                         record._fields.forEach(function(field,i){
-                            requirement_subcategories_sections.push(field.properties.title)
+                            requirement_subcategories_sections.push(field.properties)
                             if (field.properties.hasOwnProperty('units')){
                                 requirement_subcategory_units.push(field.properties.units.low)
                             }else{
@@ -230,7 +230,7 @@ async function get_requirement_subcategories(){
                   
                     // console.log(record) 
                     record._fields.forEach(function(field,i){
-                        required_courses.push(field.properties['title'])
+                        required_courses.push(field.properties)
                         required_course_units.push(field.properties.units.low)
                                     
 
@@ -264,7 +264,7 @@ async function get_requirement_subcategories(){
                       
                         // console.log(record) 
                         record._fields.forEach(function(field,i){
-                            satisfying_courses.push(field.properties['title'])
+                            satisfying_courses.push(field.properties)
                             required_course_units.push(field.properties.units.low)
                                         
     
@@ -373,7 +373,6 @@ router.route('/result').post(async (req, res) => {
         let cur_course_units = completed_courses_combined[1]
         let cur_unresolved_prereqs = completed_courses_combined[2]
 
-        console.log(cur_courses,cur_course_units)
         cur_courses.forEach(course=> {
             if (!completed_courses.includes(course)){
                 completed_courses.push(course)
@@ -394,20 +393,14 @@ router.route('/result').post(async (req, res) => {
 
     var completed_requirements = []
 
-    // console.log(await get_requirements())
-    // console.log(await get_requirement_subcategories())
-    // console.log()
+
     var secs = await get_requirement_subcategories_sections()
 
     for (i = 0;i<secs.length;i++){
-        // console.log(secs[i])
-        // console.log("0000000000000000000")
         secs[i]["Remaining Satisfiers"] = await fill_satisfiers(secs[i])
         secs[i]["Remaining Required"] = await fill_requirements(secs[i])
         secs[i]["Satisfiers"] = await fill_satisfiers(secs[i])
         secs[i]["Required"] = await fill_requirements(secs[i])
-        // console.log(secs[i])
-        // console.log("111111111111111")
         secs[i]['Completed Required'] =  []
         secs[i]['Completed Satisfiers'] =  []
         // if (secs[i].hasOwnProperty("units")){
@@ -423,7 +416,7 @@ router.route('/result').post(async (req, res) => {
      
     for (i=0;i<completed_courses.length;i++){
         for (j = 0;j<secs.length;j++){
-            // console.log(secs[j])
+            console.log(secs[j])
             if (secs[j]['Remaining Required'].includes(completed_courses[i])){
                 secs[j]['Remaining Required'].splice(secs[j]['Remaining Required'].indexOf(completed_courses[i]),1)
                 secs[j]['Completed Required'].push( completed_courses[i])
@@ -503,39 +496,43 @@ router.route('/result').post(async (req, res) => {
     for (i=0;i<completed_courses.length;i++){
         for (j = 0;j<requirement_subcategories.length;j++){
             // console.log(requirement_subcategories[j])
-            if (requirement_subcategories[j] == "Lower Division Computer Science Courses"){
-                console.log("WHOOOOOO THERE= ")
-                console.log(requirement_subcategories[j]['Remaining Required'])
-            }
-            if (requirement_subcategories[j]['Remaining Required'].includes(completed_courses[i])){
-                requirement_subcategories[j]['Remaining Required'].splice(requirement_subcategories[j]['Remaining Required'].indexOf(completed_courses[i]),1)
-                requirement_subcategories[j]['Completed Required'].push( completed_courses[i])
+ 
 
-                // console.log("SSSSSSSSSSSSSSSSSSSSSSSSs")
-                // console.log(completed_course_units[i])
-                requirement_subcategories[j]['Completed Units'] += completed_course_units[i]
-            }
-
-            if (requirement_subcategories[j]['Remaining Satisfiers'].includes(completed_courses[i])){
-                requirement_subcategories[j]['Remaining Satisfiers'].splice(requirement_subcategories[j]['Remaining Satisfiers'].indexOf(completed_courses[i]),1)
-                requirement_subcategories[j]['Completed Satisfiers'].push( completed_courses[i])
-                requirement_subcategories[j]['Completed Units'] += completed_course_units[i]
+            for (k=0;k<requirement_subcategories[j]['Remaining Required'].length;k++){
+                    if (requirement_subcategories[j]['Remaining Required'][k].title === completed_courses[i]){
+                        requirement_subcategories[j]['Completed Required'].push( requirement_subcategories[j]['Remaining Required'][k])
+                        requirement_subcategories[j]['Remaining Required'].splice(k,1)
+                        requirement_subcategories[j]['Completed Units'] += completed_course_units[i]
+                    }
+        
 
             }
+
+            for (k=0;k<requirement_subcategories[j]['Remaining Satisfiers'].length;k++){
+                    if (requirement_subcategories[j]['Remaining Satisfiers'][k].title === completed_courses[i]){
+                        requirement_subcategories[j]['Completed Satisfiers'].push( requirement_subcategories[j]['Remaining Satisfiers'][k])
+                        requirement_subcategories[j]['Remaining Satisfiers'].splice(k,1)
+                        requirement_subcategories[j]['Completed Units'] += completed_course_units[i]
+                    }
+        
+
+                
+            }
+
+
+            
+
             var sects = await (get_requirement_subcategories_sections_individual(requirement_subcategories[j]))
-            // console.log("sdasdasdsadsdvasdasda")
-            // console.log(sects)
-            // console.log(secs)
+
             for (se = 0;se<sects.length;se++){
-                // console.log(sects[se])
+
                 var all_true = true
                 if (sects.length == 0){
                     requirement_subcategories[j]['secs_completed'] =  true
 
                 }else{
                     for (s=0;s<secs.length;s++){
-                        // console.log(secs[s].title)
-                        if (secs[s].title === sects[se]){
+                        if (secs[s].title === sects[se].title){
                             all_true = all_true & secs[s].completed
                         }
                         requirement_subcategories[j]['secs_completed'] =  all_true
@@ -548,18 +545,16 @@ router.route('/result').post(async (req, res) => {
                 if (requirement_subcategories[j]['Completed Units'] >= requirement_subcategories[j]["units"].low && requirement_subcategories[j]['Required'].length > 0){
                     if (requirement_subcategories[i]['Required'].equals(requirement_subcategories[j]['Completed Required'])){
                     requirement_subcategories[j]['reqs_completed'] =  true
+                    
 
 
                     }
                 }else if (requirement_subcategories[j]['Completed Units']>= requirement_subcategories[j]["units"].low){
                     requirement_subcategories[j]['reqs_completed'] =  true
-
-
                 }
             }else{
                 if (requirement_subcategories[j]["Completed Satisfiers"].length > 0){
                     requirement_subcategories[j]['reqs_completed'] =  true
-
                 }
 
             }
@@ -567,19 +562,13 @@ router.route('/result').post(async (req, res) => {
                 requirement_subcategories[j]['Completed'] =  true
             }
         }
-        // console.log(requirement_subcategories)
     }
 
     var reqs = await get_requirements()
-    // console.log(reqs)
 
     for(i=0;i<reqs.length;i++){
         var subcats = await get_requirement_req(reqs[i])
-        // console.log(reqs[i])
-        // console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
 
-        // console.log(subcats)
-        // console.log("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
         reqs[i]["Subcategories"] = subcats
         var all_completed = true
 
@@ -608,7 +597,7 @@ router.route('/result').post(async (req, res) => {
     // // console.log(requirement_subcategories)
     // console.log(secs)
 // console.log("-------------------------------------------------")
-// console.log(requirement_json)
+// console.log(req_json)
 res.status(200).send(req_json)
 });
 

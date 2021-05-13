@@ -48,7 +48,24 @@ export default class Result extends Component {
                         case "Required":
                             var course_list = []
                             for (var course in subs[j][sub_key]){
-                                course_list.push(<Collapsible trigger={subs[j][sub_key][course]}></Collapsible>)
+                                var course_prop_list = []
+                                for (var course_prop in subs[j][sub_key][course]){
+
+                                    switch (course_prop){
+                                        case "summary":
+                                            course_prop_list.push(<Collapsible trigger="Summary">{subs[j][sub_key][course][course_prop]}</Collapsible>)
+                                            break
+                                        case "units":
+                                            course_prop_list.push(<Collapsible trigger="Units">{subs[j][sub_key][course][course_prop].low}</Collapsible>)
+                                            break
+                                        case "subject":
+                                            course_prop_list.push(<Collapsible trigger="Course Subject">{subs[j][sub_key][course][course_prop]}</Collapsible>)
+                                            break
+                                    }
+
+                                }
+                                course_list.push(<Collapsible trigger={subs[j][sub_key][course].title}>{course_prop_list}</Collapsible>)
+
                             }
                             if (course_list.length > 0){
                                 required_sec.push(<Collapsible trigger="Required Courses">{course_list}</Collapsible>)
@@ -58,7 +75,24 @@ export default class Result extends Component {
                             var course_list = []
 
                             for (var course in subs[j][sub_key]){
-                                course_list.push(<Collapsible trigger={subs[j][sub_key][course]}></Collapsible>)
+                                var course_prop_list = []
+                                for (var course_prop in subs[j][sub_key][course]){
+
+                                    switch (course_prop){
+                                        case "summary":
+                                            course_prop_list.push(<Collapsible trigger="Summary">{subs[j][sub_key][course][course_prop]}</Collapsible>)
+                                            break
+                                        case "units":
+                                            course_prop_list.push(<Collapsible trigger="Units">{subs[j][sub_key][course][course_prop].low}</Collapsible>)
+                                            break
+                                        case "subject":
+                                            course_prop_list.push(<Collapsible trigger="Course Subject">{subs[j][sub_key][course][course_prop]}</Collapsible>)
+                                            break
+                                    }
+
+                                }
+                                course_list.push(<Collapsible trigger={subs[j][sub_key][course].title}>{course_prop_list}</Collapsible>)
+
                             }
                             if (course_list.length > 0){
                                 required_sec.push(<Collapsible trigger="Completed Required Courses">{course_list}</Collapsible>)
@@ -68,7 +102,24 @@ export default class Result extends Component {
                             var course_list = []
 
                             for (var course in subs[j][sub_key]){
-                                course_list.push(<Collapsible trigger={subs[j][sub_key][course]}></Collapsible>)
+                                var course_prop_list = []
+                                for (var course_prop in subs[j][sub_key][course]){
+
+                                    switch (course_prop){
+                                        case "summary":
+                                            course_prop_list.push(<Collapsible trigger="Summary">{subs[j][sub_key][course][course_prop]}</Collapsible>)
+                                            break
+                                        case "units":
+                                            course_prop_list.push(<Collapsible trigger="Units">{subs[j][sub_key][course][course_prop].low}</Collapsible>)
+                                            break
+                                        case "subject":
+                                            course_prop_list.push(<Collapsible trigger="Course Subject">{subs[j][sub_key][course][course_prop]}</Collapsible>)
+                                            break
+                                    }
+
+                                }
+                                course_list.push(<Collapsible trigger={subs[j][sub_key][course].title}>{course_prop_list}</Collapsible>)
+
                             }
                             if (course_list.length > 0){
                                 required_sec.push(<Collapsible trigger="Remaining Required Courses">{course_list}</Collapsible>)
@@ -78,7 +129,24 @@ export default class Result extends Component {
                             var course_list = []
 
                             for (var course in subs[j][sub_key]){
-                                course_list.push(<Collapsible trigger={subs[j][sub_key][course]}></Collapsible>)
+                                var course_prop_list = []
+                                for (var course_prop in subs[j][sub_key][course]){
+
+                                    switch (course_prop){
+                                        case "summary":
+                                            course_prop_list.push(<Collapsible trigger="Summary">{subs[j][sub_key][course][course_prop]}</Collapsible>)
+                                            break
+                                        case "units":
+                                            course_prop_list.push(<Collapsible trigger="Units">{subs[j][sub_key][course][course_prop].low}</Collapsible>)
+                                            break
+                                        case "subject":
+                                            course_prop_list.push(<Collapsible trigger="Course Subject">{subs[j][sub_key][course][course_prop]}</Collapsible>)
+                                            break
+                                    }
+
+                                }
+                                course_list.push(<Collapsible trigger={subs[j][sub_key][course].title}>{course_prop_list}</Collapsible>)
+
                             }
                             if (course_list.length > 0){
                                 required_sec.push(<Collapsible trigger="Completed Satisfying Courses">{course_list}</Collapsible>)
@@ -88,7 +156,24 @@ export default class Result extends Component {
                             var course_list = []
 
                             for (var course in subs[j][sub_key]){
-                                course_list.push(<Collapsible trigger={subs[j][sub_key][course]}></Collapsible>)
+                                var course_prop_list = []
+                                for (var course_prop in subs[j][sub_key][course]){
+
+                                    switch (course_prop){
+                                        case "summary":
+                                            course_prop_list.push(<Collapsible trigger="Summary">{subs[j][sub_key][course][course_prop]}</Collapsible>)
+                                            break
+                                        case "units":
+                                            course_prop_list.push(<Collapsible trigger="Units">{subs[j][sub_key][course][course_prop].low}</Collapsible>)
+                                            break
+                                        case "subject":
+                                            course_prop_list.push(<Collapsible trigger="Course Subject">{subs[j][sub_key][course][course_prop]}</Collapsible>)
+                                            break
+                                    }
+
+                                }
+                                course_list.push(<Collapsible trigger={subs[j][sub_key][course].title}>{course_prop_list}</Collapsible>)
+
                             }
                             if (course_list.length > 0){
                                 required_sec.push(<Collapsible trigger="Available Satisfying Courses">{course_list}</Collapsible>)
@@ -154,8 +239,25 @@ export default class Result extends Component {
                                 switch (sub_key){
                                     case "Required":
                                         var course_list = []
-                                        for (var course in secs[k][sub_key]){
-                                            course_list.push(<Collapsible trigger={secs[k][sub_key][course]}></Collapsible>)
+                                        for (var course in subs[j][sub_key]){
+                                            var course_prop_list = []
+                                            for (var course_prop in subs[j][sub_key][course]){
+
+                                                switch (course_prop){
+                                                    case "summary":
+                                                        course_prop_list.push(<Collapsible trigger="Summary">{subs[j][sub_key][course][course_prop]}</Collapsible>)
+                                                        break
+                                                    case "units":
+                                                        course_prop_list.push(<Collapsible trigger="Units">{subs[j][sub_key][course][course_prop].low}</Collapsible>)
+                                                        break
+                                                    case "subject":
+                                                        course_prop_list.push(<Collapsible trigger="Subject">{subs[j][sub_key][course][course_prop]}</Collapsible>)
+                                                        break
+                                                }
+            
+                                            }
+                                            course_list.push(<Collapsible trigger={subs[j][sub_key][course].title}>{course_prop_list}</Collapsible>)
+            
                                         }
                                         if (course_list.length > 0){
                                             required_sec.push(<Collapsible trigger="Required Courses">{course_list}</Collapsible>)
@@ -164,8 +266,25 @@ export default class Result extends Component {
                                     case "Completed Required":
                                         var course_list = []
             
-                                        for (var course in secs[k][sub_key]){
-                                            course_list.push(<Collapsible trigger={secs[k][sub_key][course]}></Collapsible>)
+                                        for (var course in subs[j][sub_key]){
+                                            var course_prop_list = []
+                                            for (var course_prop in subs[j][sub_key][course]){
+
+                                                switch (course_prop){
+                                                    case "summary":
+                                                        course_prop_list.push(<Collapsible trigger="Summary">{subs[j][sub_key][course][course_prop]}</Collapsible>)
+                                                        break
+                                                    case "units":
+                                                        course_prop_list.push(<Collapsible trigger="Units">{subs[j][sub_key][course][course_prop].low}</Collapsible>)
+                                                        break
+                                                    case "subject":
+                                                        course_prop_list.push(<Collapsible trigger="Subject">{subs[j][sub_key][course][course_prop]}</Collapsible>)
+                                                        break
+                                                }
+            
+                                            }
+                                            course_list.push(<Collapsible trigger={subs[j][sub_key][course].title}>{course_prop_list}</Collapsible>)
+            
                                         }
                                         if (course_list.length > 0){
                                             required_sec.push(<Collapsible trigger="Completed Required Courses">{course_list}</Collapsible>)
@@ -174,8 +293,25 @@ export default class Result extends Component {
                                     case "Remaining Required":
                                         var course_list = []
             
-                                        for (var course in secs[k][sub_key]){
-                                            course_list.push(<Collapsible trigger={secs[k][sub_key][course]}></Collapsible>)
+                                        for (var course in subs[j][sub_key]){
+                                            var course_prop_list = []
+                                            for (var course_prop in subs[j][sub_key][course]){
+
+                                                switch (course_prop){
+                                                    case "summary":
+                                                        course_prop_list.push(<Collapsible trigger="Summary">{subs[j][sub_key][course][course_prop]}</Collapsible>)
+                                                        break
+                                                    case "units":
+                                                        course_prop_list.push(<Collapsible trigger="Units">{subs[j][sub_key][course][course_prop].low}</Collapsible>)
+                                                        break
+                                                    case "subject":
+                                                        course_prop_list.push(<Collapsible trigger="Subject">{subs[j][sub_key][course][course_prop]}</Collapsible>)
+                                                        break
+                                                }
+            
+                                            }
+                                            course_list.push(<Collapsible trigger={subs[j][sub_key][course].title}>{course_prop_list}</Collapsible>)
+            
                                         }
                                         if (course_list.length > 0){
                                             required_sec.push(<Collapsible trigger="Remaining Required Courses">{course_list}</Collapsible>)
@@ -184,8 +320,27 @@ export default class Result extends Component {
                                     case "Completed Satisfiers":
                                         var course_list = []
             
-                                        for (var course in secs[k][sub_key]){
-                                            course_list.push(<Collapsible trigger={secs[k][sub_key][course]}></Collapsible>)
+                                        for (var course in subs[j][sub_key]){
+                                            var course_prop_list = []
+                                            for (var course_prop in subs[j][sub_key][course]){
+
+                                                switch (course_prop){
+                                                    case "summary":
+                                                        course_prop_list.push(<Collapsible trigger="Summary">{subs[j][sub_key][course][course_prop]}</Collapsible>)
+                                                        break
+                                                    case "units":
+                                                        course_prop_list.push(<Collapsible trigger="Units">{subs[j][sub_key][course][course_prop].low}</Collapsible>)
+                                                        for (var course in secs[k][sub_key]){
+                                                            course_list.push(<Collapsible trigger={secs[k][sub_key][course]}></Collapsible>)
+                                                        }     break
+                                                    case "subject":
+                                                        course_prop_list.push(<Collapsible trigger="Subject">{subs[j][sub_key][course][course_prop]}</Collapsible>)
+                                                        break
+                                                }
+            
+                                            }
+                                            course_list.push(<Collapsible trigger={subs[j][sub_key][course].title}>{course_prop_list}</Collapsible>)
+            
                                         }
                                         if (course_list.length > 0){
                                             required_sec.push(<Collapsible trigger="Completed Satisfying Courses">{course_list}</Collapsible>)
@@ -194,8 +349,25 @@ export default class Result extends Component {
                                     case "Remaining Satisfiers":
                                         var course_list = []
             
-                                        for (var course in secs[k][sub_key]){
-                                            course_list.push(<Collapsible trigger={secs[k][sub_key][course]}></Collapsible>)
+                                        for (var course in subs[j][sub_key]){
+                                            var course_prop_list = []
+                                            for (var course_prop in subs[j][sub_key][course]){
+
+                                                switch (course_prop){
+                                                    case "summary":
+                                                        course_prop_list.push(<Collapsible trigger="Summary">{subs[j][sub_key][course][course_prop]}</Collapsible>)
+                                                        break
+                                                    case "units":
+                                                        course_prop_list.push(<Collapsible trigger="Units">{subs[j][sub_key][course][course_prop].low}</Collapsible>)
+                                                        break
+                                                    case "subject":
+                                                        course_prop_list.push(<Collapsible trigger="Subject">{subs[j][sub_key][course][course_prop]}</Collapsible>)
+                                                        break
+                                                }
+            
+                                            }
+                                            course_list.push(<Collapsible trigger={subs[j][sub_key][course].title}>{course_prop_list}</Collapsible>)
+            
                                         }
                                         if (course_list.length > 0){
                                             required_sec.push(<Collapsible trigger="Available Satisfying Courses">{course_list}</Collapsible>)
@@ -253,7 +425,7 @@ export default class Result extends Component {
         var  table= data[1]
 	 return (
      <div>
-        <p>{completed}</p>
+        <p>Completed courses: {completed}</p>
         {data}
     </div>
          )

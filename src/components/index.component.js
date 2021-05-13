@@ -66,37 +66,12 @@ export default class Index extends Component {
         then( response => {
             console.log(response)
             sessionStorage.setItem("data", JSON.stringify(response.data));
-            window.location.replace(`/result`)  //data=${JSON.stringify(response.data)}`);
+            window.location.replace(`/result`) 
         }).catch( error => {
             console.log(error)
         })
         
     }
-    //     axios.post('http://localhost:5000/requirements/verify_course_history',this.state).
-    //     then( response => {
-    //         if (response.data[1].length != 0){
-    //             console.log("Unresolved prerequisites found: " + response.data[1])
-    //             axios.post('http://localhost:5000/requirements/get_prereq_options',response.data[1]).
-    //             then( response => {
-    //                 console.log("im in it")
-    //                 console.log(response.data[0])
-    //                 this.setState({
-    //                     prereq_resolution:response.data
-    //                 });
-
-    //         })
-    //     }else{
-    //         console.log(response.data[0])
-    //         axios.post('http://localhost:5000/requirements/result',response.data[0]).
-    //         then( response => { 
-    //             console.log("yo")
-        
-    //         }).catch( error => {
-    //             console.log(error)
-    //          })
-    //     }
-    // })
-    // }
       
     render() {
         const items = JSON.stringify(this.state.prereq_resolution)
