@@ -13,7 +13,8 @@ export default class Index extends Component {
           studentName: '',
           studentStatus: '',
           studentMajor: '',
-          studentCH:''
+          studentCH:'',
+          prereq_resolution: []
         };
     
         this._handleSubmit = this._handleSubmit.bind(this);
@@ -58,20 +59,23 @@ export default class Index extends Component {
             studentCH: e.target.value,
         });
     }
-
     _handleSubmit  = (event) => {
         console.log(this.state);
         event.preventDefault();
-        axios.post('public/index.html',this.state).
+        axios.post('http://localhost:5000/requirements/result',this.state).
         then( response => {
             console.log(response)
-            this.setState({message:"User created successfuly."})
+            sessionStorage.setItem("data", JSON.stringify(response.data));
+            window.location.replace(`/result`) 
         }).catch( error => {
             console.log(error)
         })
+        
     }
       
     render() {
+        const items = JSON.stringify(this.state.prereq_resolution)
+        
         return (
             
             <div class="form-body">
