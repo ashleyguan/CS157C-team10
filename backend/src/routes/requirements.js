@@ -7,8 +7,8 @@ const neo4j = require('neo4j-driver');
 var parser = require('parse-neo4j');
 const { isCompositeComponent } = require('react-dom/test-utils');
 
-const driver = neo4j.driver('bolt://localhost:7687',
-                  neo4j.auth.basic('neo4j', 'root'), 
+const driver = neo4j.driver('bolt://18.207.189.159:7687',
+                  neo4j.auth.basic('neo4j', 'cabs-key-preposition'), 
                   {/* encrypted: 'ENCRYPTION_OFF' */});
                   
 // const session = driver.session();

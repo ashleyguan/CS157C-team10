@@ -3,7 +3,7 @@ import Collapsible from 'react-collapsible';
 import "./result.scss";
 const neo4j = require('neo4j-driver');
 const driver = neo4j.driver('bolt://localhost:7687',
-                  neo4j.auth.basic('neo4j', 'root'), 
+                  neo4j.auth.basic('neo4j', 'cabs-key-preposition'), 
                   {/* encrypted: 'ENCRYPTION_OFF' */});
 
 export default class Result extends Component {
