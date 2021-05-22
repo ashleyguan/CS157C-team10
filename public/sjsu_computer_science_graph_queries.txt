@@ -350,6 +350,3 @@ match (a), (b) where a.title = "CS 154" and  b.title = "MATH 42" CREATE (a)-[r:R
 match (a), (b) where a.title = "CS 154" and  b.title = "CS 46B" CREATE (a)-[r:REQUIRES]->(b);
 match (a), (b) where a.title = "CS 160" and  b.title = "CS 146" CREATE (a)-[r:REQUIRES]->(b);
 match (a), (b) where a.title = "CS 160" and  b.title = "CS 151" CREATE (a)-[r:REQUIRES]->(b);
-
-
-
